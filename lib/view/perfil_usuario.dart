@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
@@ -156,8 +157,8 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                   ),
                                   child: CircleAvatar(
                                     radius: 5,
-                                    backgroundImage: FileImage(File(imagePath!)),
-                                    
+                                    backgroundImage:
+                                        FileImage(File(imagePath!)),
                                   ),
                                 ),
                                 Positioned(
@@ -288,6 +289,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
     if (file != null) {
       setState(() {
         imagePath = file!.path;
+        //guardar(imagePath.toString());
       });
     }
   }
@@ -391,5 +393,19 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
             ),
           );
         });
+  }
+
+  guardar(String imagen) async {
+    final dbHelper = DatabaseHelper.instance;
+    UsuarioLite oUsuarioLite = UsuarioLite(
+      2,
+      oUsuario!.cdesUser,
+      usuarioLite!.vUsuContrasenia,
+      "xd",
+      "xd",
+      imagen,
+      oUsuario!.codUser,
+    );
+    await dbHelper.insert(oUsuarioLite);
   }
 }
