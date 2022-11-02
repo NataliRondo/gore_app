@@ -1,8 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_logic_in_create_state
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_logic_in_create_state, deprecated_member_use, unnecessary_null_comparison, prefer_typing_uninitialized_variables
 
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
@@ -28,142 +29,12 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
 
   _PerfilUsuarioState(this.oUsuario, this.usuarioLite);
 
-  String img = "";
-  File? imagen;
-  final picker = ImagePicker();
   bool flag = true;
-
-  Future selimagen(op) async {
-    XFile? pickedFile;
-    if (op == 1) {
-      pickedFile = await picker.pickImage(
-        source: ImageSource.camera,
-        //maxHeight: 566,
-        //maxWidth: 1350,
-      );
-    } else {
-      pickedFile = await picker.pickImage(
-        source: ImageSource.gallery,
-        //maxHeight: 566,
-        //maxWidth: 1350,
-      );
-    }
-
-    setState(() {
-      if (pickedFile != null) {
-        imagen = File(pickedFile.path);
-        //usuarioLite!.foto = imagen!.path;
-        img = imagen!.path;
-      } else {
-        print("No selecciono nada");
-      }
-    });
-
-    Navigator.of(context).pop();
-  }
-
-  opciones(context) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            contentPadding: const EdgeInsets.all(2),
-            content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      selimagen(1);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: 1,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                      child: Row(
-                        children: const [
-                          Expanded(
-                            child: Text(
-                              "Tomar foto",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          Icon(
-                            Icons.photo_camera,
-                            color: Colors.blue,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      selimagen(2);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            width: 1,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                      child: Row(
-                        children: const [
-                          Expanded(
-                            child: Text(
-                              "Seleccionar foto",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          Icon(
-                            Icons.photo_library,
-                            color: Colors.blue,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 235, 141, 141),
-                      ),
-                      child: Row(
-                        children: const [
-                          Expanded(
-                            child: Text(
-                              "Cancelar",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                              textAlign: TextAlign.center,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
+  File? image;
+  String? imagePath;
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey keyScaffold = GlobalKey();
     ResponsiveApp responsiveApp = ResponsiveApp(context);
     String dni = oUsuario!.codUser.toString();
     //String imagen64;
@@ -171,7 +42,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
     return Scaffold(
       //key: keyScaffold,
       body: Column(
-        
         children: [
           Container(
             height: responsiveApp.hp(70),
@@ -219,40 +89,101 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                         ],
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        opciones(context);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(
-                          right: responsiveApp.dp(5),
-                        ),
-                        width: responsiveApp.wp(50),
-                        child: CircleAvatar(
-                          radius: responsiveApp.dp(30),
-                          backgroundColor: Colors.white,
-                          child: imagen != null
-                              ? CircleAvatar(
-                                  radius: responsiveApp.dp(25),
-                                  backgroundColor: Colors.transparent,
-                                  //backgroundImage: FileImage(imagen!, scale: 2),
-                                  child: 
-                                  Image.file(
-                                  imagen!,
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.fitHeight,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: imagePath == null
+                          ? Stack(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 4, color: Colors.white10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          spreadRadius: 2,
+                                          blurRadius: 10,
+                                          color: Colors.black.withOpacity(0.1)),
+                                    ],
+                                    shape: BoxShape.circle,
+                                    image: const DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage("src/usuario.png"),
+                                    ),
+                                  ),
                                 ),
-                                )
-                              : CircleAvatar(
-                                  radius: responsiveApp.dp(25),
-                                  //backgroundImage: foto.image,
-                                  backgroundImage:
-                                      const AssetImage("src/usuario.png"),
-                                  backgroundColor: Colors.transparent,
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            width: 4, color: Colors.white),
+                                        color: Colors.blue),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        opciones(context);
+                                        //print(photofile);
+                                      },
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                        ),
-                      ),
+                              ],
+                            )
+                          : Stack(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 4, color: Colors.white10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          spreadRadius: 2,
+                                          blurRadius: 10,
+                                          color: Colors.black.withOpacity(0.1)),
+                                    ],
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: CircleAvatar(
+                                    radius: 5,
+                                    backgroundImage: FileImage(File(imagePath!)),
+                                    
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            width: 4, color: Colors.white),
+                                        color: Colors.blue),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        opciones(context);
+                                      },
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                     ),
                   ],
                 ),
@@ -349,5 +280,116 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
         ],
       ),
     );
+  }
+
+  void pickMedia(ImageSource source) async {
+    XFile? file;
+    file = await ImagePicker().pickImage(source: source);
+    if (file != null) {
+      setState(() {
+        imagePath = file!.path;
+      });
+    }
+  }
+
+  opciones(context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            contentPadding: const EdgeInsets.all(2),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      pickMedia(ImageSource.camera);
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            width: 1,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        children: const [
+                          Expanded(
+                            child: Text(
+                              "Tomar foto",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          Icon(
+                            Icons.photo_camera,
+                            color: Colors.blue,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      pickMedia(ImageSource.gallery);
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            width: 1,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      child: Row(
+                        children: const [
+                          Expanded(
+                            child: Text(
+                              "Seleccionar foto",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          Icon(
+                            Icons.photo_library,
+                            color: Colors.blue,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 235, 141, 141),
+                      ),
+                      child: Row(
+                        children: const [
+                          Expanded(
+                            child: Text(
+                              "Cancelar",
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

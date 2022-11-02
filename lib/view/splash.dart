@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/loginDA.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
-import 'package:gore_app/main.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/view/loginView.dart';
@@ -20,22 +19,18 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   bool _isLoading = true;
   @override
+
+  
   void initState() {
     super.initState();
-    loadWidget();
+    
 // 2. Future.delayed
     Future.delayed(const Duration(seconds: 5), () {
       setState(() {
         _isLoading = false;
         FocusScope.of(context).requestFocus(FocusNode());
       });
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: ((context) => const LoginView()),
-        ),
-        (Route<dynamic> route) => false,
-      );
+      loadWidget();
     });
   }
 
@@ -47,17 +42,16 @@ class _SplashViewState extends State<SplashView> {
       loginDA api = loginDA();
       Usuario oUsuario = await api.login(oUsarioLite!.DNI.toString(),
           oUsarioLite.vUsuContrasenia.toString(), context);
-      // ignore: unnecessary_null_comparison
       if (oUsuario != null) {
         return await Future<Widget>.delayed(
             const Duration(seconds: 1), () => PantallaInicio(oUsuario: oUsuario, usuarioLite: oUsarioLite,));
       } else {
         return await Future<Widget>.delayed(
-            const Duration(seconds: 1), () => const AfterSplash());
+            const Duration(seconds: 1), () => const LoginView());
       }
     } else {
       return await Future<Widget>.delayed(
-          const Duration(seconds: 1), () => const AfterSplash());
+          const Duration(seconds: 1), () => const LoginView());
     }
   }
 

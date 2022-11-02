@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state
+// ignore_for_file: no_logic_in_create_state, import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
 import 'package:gore_app/models/UsuarioLite.dart';

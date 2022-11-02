@@ -5,7 +5,7 @@ import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/widgets/lista_cumple.dart';
 
 class Cumple extends StatefulWidget {
-  Cumple({Key? key}) : super(key: key);
+  const Cumple({Key? key}) : super(key: key);
 
   @override
   State<Cumple> createState() => _CumpleState();
