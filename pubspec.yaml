@@ -42,7 +42,7 @@ dependencies:
   path_provider: ^2.0.11
   path: ^1.8.2
   flutter_clean_calendar: ^1.1.0
-  image_picker: ^0.8.6
+  image_picker: ^0.8.4+2
   #path: ^1.8.2
   #splashscreen:
   #flutter_splash: ^1.0.

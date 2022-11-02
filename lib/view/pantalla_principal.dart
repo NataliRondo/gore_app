@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/usuario.dart';
-import 'package:gore_app/view/home_view.dart';
 import 'package:gore_app/utils/colores.dart';
+import 'package:gore_app/view/perfil_usuario.dart';
 import 'package:gore_app/view/widgets/menu.dart';
 
 // ignore: must_be_immutable
@@ -44,7 +44,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
         onTap: () {
               FocusScope.of(context).unfocus();
         },
-        child: HomeView(oUsuario: oUsuario,usuarioLite: usuarioLite,)),
+        child: PerfilUsuario(oUsuario: oUsuario,usuarioLite: usuarioLite,)),
     );
   }
 }

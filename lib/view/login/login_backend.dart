@@ -28,8 +28,8 @@ class LoginBackend {
             1,
             oUsuario.cdesUser,
             password,
-            "",
-            "",
+            "xd",
+            "xd",
             "src/usuario.png",
             oUsuario.codUser,
           );
