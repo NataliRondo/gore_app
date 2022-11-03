@@ -17,6 +17,10 @@ class _CumpleState extends State<Cumple> {
     ResponsiveApp responsiveApp = ResponsiveApp(context);
     return Scaffold(
       appBar: AppBar(
+        title: const Center(child: Padding(
+          padding: EdgeInsets.only(right: 30),
+          child: Text("Cumpleaños de día",),
+        )),
         backgroundColor: colorFondo,
         leading: IconButton(
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,

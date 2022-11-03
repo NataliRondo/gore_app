@@ -1,4 +1,5 @@
 // @dart=2.9
+
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -11,6 +12,12 @@ import 'package:gore_app/view/asistenciaView.dart';
 import 'package:gore_app/view/cumple.dart';
 import 'package:gore_app/view/notificaciones.dart';
 import 'package:gore_app/view/soporteView.dart';
+
+Uint8List obtenerFoto(UsuarioLite usuarioLite) {
+   Uint8List bytes = base64.decode(usuarioLite.foto.split(',').last);
+  return bytes;
+}
+
 
 menuDrawer(BuildContext context, UsuarioLite usuarioLite) {
   Uint8List bytes = obtenerFoto(usuarioLite);
@@ -116,8 +123,19 @@ menuDrawer(BuildContext context, UsuarioLite usuarioLite) {
                 MaterialPageRoute(builder: ((context) => const SoporteView())));
           },
         ),
+        ListTile(
+          leading: Icon(
+            Icons.arrow_back,
+            color: Tema,
+          ),
+          title: const Text("Cerrar sesión"),
+          onTap: () {
+            Navigator.of(context).pop();
+            Navigator.push(context,
+                MaterialPageRoute(builder: ((context) => const SoporteView())));
+          },
+        ),
       ],
     ),
   );
 }
-

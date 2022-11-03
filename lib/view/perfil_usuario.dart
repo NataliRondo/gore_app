@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_logic_in_create_state, deprecated_member_use, unnecessary_null_comparison, prefer_typing_uninitialized_variables
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -285,6 +286,11 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
       ),
     );
   }
+  Uint8List obtenerFoto(UsuarioLite? usuarioLite) {
+   Uint8List bytes = base64.decode(usuarioLite!.foto!.split(',').last);
+  return bytes;
+}
+
 
   void pickMedia(ImageSource source) async {
     XFile? file;

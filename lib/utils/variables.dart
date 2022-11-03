@@ -50,7 +50,3 @@ var formatters = [
   //FilteringTextInputFormatter.allow(RegExp('[0-9]')),
 ];
 
-Uint8List obtenerFoto(UsuarioLite? usuarioLite) {
-   Uint8List bytes = base64.decode(usuarioLite!.foto!.split(',').last);
-  return bytes;
-}
