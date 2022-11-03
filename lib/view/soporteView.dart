@@ -36,9 +36,9 @@ class _SoporteViewState extends State<SoporteView> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  botonSoporte(context, "Recursos humanos", "", "", Icons.whatsapp, Icons.phone),
-                  botonSoporte(context, "Subgerencia de Presupuesto", "", "", Icons.whatsapp, Icons.phone),
-                  botonSoporte(context, "Gerencia regional de Infraestructura", "", "", Icons.whatsapp, Icons.phone),
+                  botonSoporte(context, "Sub gerencia de tecnologías de la información", "992023978", "", Icons.whatsapp, Icons.phone),
+                  //botonSoporte(context, "Subgerencia de Presupuesto", "", "", Icons.whatsapp, Icons.phone),
+                  //botonSoporte(context, "Gerencia regional de Infraestructura", "", "", Icons.whatsapp, Icons.phone),
 
                 ],
               ),

@@ -20,6 +20,8 @@ class Usuario {
          this.nuIntento,
          this.ccosCodcosto,
          this.codUserAd,
+         this.foto,
+         this.dependencia,
          this.flgMarca,
     });
 
@@ -37,6 +39,8 @@ class Usuario {
     final double? nuIntento;
     final dynamic ccosCodcosto;
     final dynamic codUserAd;
+    String? foto;
+    String? dependencia;
     final dynamic flgMarca;
 
     factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
@@ -54,6 +58,8 @@ class Usuario {
         nuIntento: json["NU_INTENTO"],
         ccosCodcosto: json["CCOS_CODCOSTO"],
         codUserAd: json["COD_USER_AD"],
+        foto: json["FOTO"],
+        dependencia: json["DEPENDENCIA"],
         flgMarca: json["FLG_MARCA"],
     );
 
@@ -72,6 +78,8 @@ class Usuario {
         "NU_INTENTO": nuIntento,
         "CCOS_CODCOSTO": ccosCodcosto,
         "COD_USER_AD": codUserAd,
+        "FOTO": foto,
+        "DEPENDENCIA": dependencia,
         "FLG_MARCA": flgMarca,
     };
 }

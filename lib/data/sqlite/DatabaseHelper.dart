@@ -46,13 +46,13 @@ class DatabaseHelper {
     try {
       await db.execute('''
           CREATE TABLE Usuario (
-            id_usu INTEGER PRIMARY KEY,
+            DNI TEXT PRIMARY KEY,
             vUsuNick TEXT NOT NULL,
             vUsuContrasenia TEXT NOT NULL,
             vPerNombre TEXT NOT NULL,
             vPerApellidos TEXT NOT NULL,
             foto TEXT NOT NULL,
-            DNI TEXT NOT NULL
+            dependencia TEXT NOT NULL
           )
           ''');
     } catch (ex) {
@@ -63,7 +63,7 @@ class DatabaseHelper {
 
   Future _update() async {
     Database? db = await instance.database;
-    await db!.update("Usuario", );
+    //await db!.update("Usuario", );
   }
 
   // Helper methods

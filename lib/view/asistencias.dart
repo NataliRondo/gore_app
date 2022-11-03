@@ -1,9 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_calendar/clean_calendar_event.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
-import 'package:gore_app/utils/asistencia.dart';
-import 'package:gore_app/utils/colores.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class AsistenciasView extends StatefulWidget {
   const AsistenciasView({Key? key}) : super(key: key);
@@ -26,7 +24,7 @@ class _AsistenciasViewState extends State<AsistenciasView> {
           description: 'A special event',
           color: Colors.blue.shade700),
     ],
-    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2):
+    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 3):
         [
       CleanCalendarEvent('Event B',
           startTime: DateTime(DateTime.now().year, DateTime.now().month,
@@ -52,7 +50,6 @@ class _AsistenciasViewState extends State<AsistenciasView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     selectedEvent = events[selectedDay] ?? [];
     super.initState();
   }
@@ -61,19 +58,20 @@ class _AsistenciasViewState extends State<AsistenciasView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Asistencias'),
+        title: const Text('Asistencias'),
         centerTitle: true,
       ),
       body: SafeArea(
         child: Card(
-          elevation: 5,
+          //elevation: 5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: const BorderSide(color: Colors.blueGrey, width: 2.0),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15),
             child: Calendar(
+              initialDate: DateTime.now(),
               startOnMonday: true,
               selectedColor: Colors.blue,
               todayColor: Colors.red,
@@ -87,18 +85,19 @@ class _AsistenciasViewState extends State<AsistenciasView> {
                 return _handleData(date);
               },
               events: events,
+              locale: "en_ES",
               isExpanded: true,
-              dayOfWeekStyle: TextStyle(
+              dayOfWeekStyle: const TextStyle(
                 fontSize: 15,
                 color: Colors.black12,
                 fontWeight: FontWeight.w100,
               ),
-              bottomBarTextStyle: TextStyle(
+              bottomBarTextStyle: const TextStyle(
                 color: Colors.white,
               ),
-              hideBottomBar: false,
-              hideArrows: false,
-              weekDays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+              //hideBottomBar: true,
+              //hideArrows: false,
+              weekDays: const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             ),
           ),
         ),

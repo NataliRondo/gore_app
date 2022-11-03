@@ -1,13 +1,19 @@
+// @dart=2.9
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
-import 'package:gore_app/view/asistencias.dart';
+import 'package:gore_app/view/asistenciaView.dart';
 import 'package:gore_app/view/cumple.dart';
 import 'package:gore_app/view/notificaciones.dart';
 import 'package:gore_app/view/soporteView.dart';
 
-menuDrawer(BuildContext context) {
+menuDrawer(BuildContext context, UsuarioLite usuarioLite) {
+  Uint8List bytes = obtenerFoto(usuarioLite);
   ResponsiveApp responsiveApp = ResponsiveApp(context);
   return Drawer(
     child: ListView(
@@ -26,27 +32,30 @@ menuDrawer(BuildContext context) {
                   width: responsiveApp.wp(30),
                   height: responsiveApp.wp(30),
                   child: CircleAvatar(
-                      radius: responsiveApp.dp(30),
-                      backgroundColor: Colors.white,
-                      child: CircleAvatar(
-                        radius: responsiveApp.dp(25),
-                        //backgroundImage: foto.image,
-                        backgroundImage:
-                            const AssetImage("src/logo_region.png"),
-                        backgroundColor: Colors.transparent,
-                      )),
+                    radius: responsiveApp.dp(30),
+                    backgroundColor: Colors.white,
+                    child: CircleAvatar(
+                      radius: responsiveApp.dp(25),
+                      //child: Image.memory(bytes),
+                      backgroundImage: MemoryImage(bytes, scale: 0.3),
+                      backgroundColor: Colors.transparent,
+                    ),
+                  ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(top: responsiveApp.dp(3)),
-                  width: responsiveApp.wp(50),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Center(
-                      child: Text(
-                        "Natali Rondo Llajaruna",
-                        //oUsuario.persona.vPerApellidos,
-                        textAlign: TextAlign.right,
-                        style: fontStyle,
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: responsiveApp.dp(3), right: responsiveApp.dp(8)),
+                    width: responsiveApp.wp(50),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          usuarioLite.vUsuNick,
+                          //oUsuario.persona.vPerApellidos,
+                          textAlign: TextAlign.right,
+                          style: fontStyle,
+                        ),
                       ),
                     ),
                   ),
@@ -66,7 +75,7 @@ menuDrawer(BuildContext context) {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: ((context) => const AsistenciasView())));
+                    builder: ((context) => const AsistenciaView())));
           },
         ),
         ListTile(
@@ -90,7 +99,9 @@ menuDrawer(BuildContext context) {
           onTap: () {
             Navigator.of(context).pop();
             Navigator.push(
-                context, MaterialPageRoute(builder: ((context) => const Notificaciones())));
+                context,
+                MaterialPageRoute(
+                    builder: ((context) => const Notificaciones())));
           },
         ),
         ListTile(
@@ -98,14 +109,15 @@ menuDrawer(BuildContext context) {
             Icons.contacts,
             color: Tema,
           ),
-          title: const Text("Soporte Técnico"),
+          title: const Text("Soporte Informático"),
           onTap: () {
             Navigator.of(context).pop();
-            Navigator.push(
-                context, MaterialPageRoute(builder: ((context) => const SoporteView())));
+            Navigator.push(context,
+                MaterialPageRoute(builder: ((context) => const SoporteView())));
           },
         ),
       ],
     ),
   );
 }
+

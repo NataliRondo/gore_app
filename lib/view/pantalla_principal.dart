@@ -1,5 +1,5 @@
 // ignore_for_file: no_logic_in_create_state, import_of_legacy_library_into_null_safe
-
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/usuario.dart';
@@ -9,17 +9,18 @@ import 'package:gore_app/view/widgets/menu.dart';
 
 // ignore: must_be_immutable
 class PantallaInicio extends StatefulWidget {
-  Usuario? oUsuario;
-  UsuarioLite? usuarioLite;
-  PantallaInicio({Key? key,this.oUsuario, this.usuarioLite}) : super(key: key);
+  Usuario oUsuario;
+  UsuarioLite usuarioLite;
+  PantallaInicio({Key key, this.oUsuario, this.usuarioLite}) : super(key: key);
 
   @override
-  State<PantallaInicio> createState() => _PantallaInicioState(oUsuario, usuarioLite);
+  State<PantallaInicio> createState() =>
+      _PantallaInicioState(oUsuario, usuarioLite);
 }
 
 class _PantallaInicioState extends State<PantallaInicio> {
-  Usuario? oUsuario;
-  UsuarioLite? usuarioLite;
+  Usuario oUsuario;
+  UsuarioLite usuarioLite;
 
   _PantallaInicioState(this.oUsuario, this.usuarioLite);
 
@@ -34,17 +35,18 @@ class _PantallaInicioState extends State<PantallaInicio> {
         leading: IconButton(
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           icon: const Icon(Icons.menu),
-          onPressed: () async{
-            keyScaffold.currentState!.openDrawer();
+          onPressed: () async {
+            keyScaffold.currentState.openDrawer();
           },
         ),
       ),
-      drawer: menuDrawer(context),
+      drawer: menuDrawer(context, usuarioLite),
       body: GestureDetector(
         onTap: () {
-              FocusScope.of(context).unfocus();
+          FocusScope.of(context).unfocus();
         },
-        child: PerfilUsuario(oUsuario: oUsuario,usuarioLite: usuarioLite,)),
+        child: PerfilUsuario(oUsuario: oUsuario, usuarioLite: usuarioLite),
+      ),
     );
   }
 }

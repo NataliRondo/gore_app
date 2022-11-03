@@ -22,16 +22,17 @@ class LoginBackend {
       
       if (oUsuario != null) {
         final dbHelper = DatabaseHelper.instance;
+        String dni = oUsuario.codUser.toString();
         int? allRows = await dbHelper.queryRowCount();
         if (allRows == 0) {
           UsuarioLite oUsuarioLite = UsuarioLite(
-            1,
+            dni,
             oUsuario.cdesUser,
             password,
             "xd",
             "xd",
-            "src/usuario.png",
-            oUsuario.codUser,
+            oUsuario.foto,
+            oUsuario.dependencia,
           );
           await dbHelper.insert(oUsuarioLite);
         }

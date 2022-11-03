@@ -10,7 +10,9 @@ import 'package:gore_app/view/loginView.dart';
 import 'package:gore_app/view/pantalla_principal.dart';
 import 'package:splashscreen/splashscreen.dart';
 
+
 void main() {
+  //initializeDateFormatting().then((_) => runApp(const MyApp()));
   runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
 }
 

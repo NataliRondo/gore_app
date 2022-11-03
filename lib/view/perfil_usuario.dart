@@ -1,9 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_logic_in_create_state, deprecated_member_use, unnecessary_null_comparison, prefer_typing_uninitialized_variables
 
-import 'dart:async';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/usuario.dart';
@@ -33,9 +32,11 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
   bool flag = true;
   File? image;
   String? imagePath;
+  
 
   @override
   Widget build(BuildContext context) {
+    Uint8List bytes = obtenerFoto(usuarioLite);
     ResponsiveApp responsiveApp = ResponsiveApp(context);
     String dni = oUsuario!.codUser.toString();
     //String imagen64;
@@ -108,9 +109,9 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                           color: Colors.black.withOpacity(0.1)),
                                     ],
                                     shape: BoxShape.circle,
-                                    image: const DecorationImage(
+                                    image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: AssetImage("src/usuario.png"),
+                                      image: MemoryImage(bytes, scale: 0.3),
                                     ),
                                   ),
                                 ),
@@ -188,15 +189,17 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                     ),
                   ],
                 ),
-                SizedBox(
-                  width: responsiveApp.wp(20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      "Sistemas",
-                      //oUsuario.dependencia.vDepNombre,
-                      textAlign: TextAlign.center,
-                      style: fontStyle,
+                    //width: responsiveApp.wp(30),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        usuarioLite!.dependencia.toString(),
+                        textAlign: TextAlign.center,
+                        style: fontStyle,
+                      ),
                     ),
                   ),
                 ),
@@ -398,13 +401,13 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
   guardar(String imagen) async {
     final dbHelper = DatabaseHelper.instance;
     UsuarioLite oUsuarioLite = UsuarioLite(
-      2,
       oUsuario!.cdesUser,
       usuarioLite!.vUsuContrasenia,
       "xd",
       "xd",
       imagen,
       oUsuario!.codUser,
+      ""
     );
     await dbHelper.insert(oUsuarioLite);
   }

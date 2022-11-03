@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gore_app/models/UsuarioLite.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:intl/intl.dart';
 
@@ -46,3 +49,8 @@ var formatters = [
   FilteringTextInputFormatter.deny('/'),
   //FilteringTextInputFormatter.allow(RegExp('[0-9]')),
 ];
+
+Uint8List obtenerFoto(UsuarioLite? usuarioLite) {
+   Uint8List bytes = base64.decode(usuarioLite!.foto!.split(',').last);
+  return bytes;
+}

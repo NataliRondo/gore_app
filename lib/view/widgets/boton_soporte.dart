@@ -1,9 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
+import 'package:gore_app/utils/open_whatsaap.dart';
 import 'package:gore_app/utils/variables.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-Widget botonSoporte(BuildContext context, String? nombre, String? celular, String? mensaje, IconData icon1, IconData icon2) {
+Widget botonSoporte(BuildContext context, String? nombre, String? celular,
+    String? mensaje, IconData whatsapp, IconData phone) {
   return Padding(
     padding: const EdgeInsets.only(right: 15, left: 15, top: 5, bottom: 5),
     child: Card(
@@ -13,28 +15,42 @@ Widget botonSoporte(BuildContext context, String? nombre, String? celular, Strin
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
-          child: Row(
+          child: Column(
             children: [
               Text(
                 nombre.toString(),
                 style: fontStyleSoporte,
               ),
-              IconButton(
-                onPressed: () {
-                  //openwhatsapp(context, "$celular", mensaje.toString());
-                },
-                icon: Icon(
-                  icon1,
-                  color: Whatsapp,
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  //openwhatsapp(context, "$celular", mensaje.toString());
-                },
-                icon: Icon(
-                  icon2,
-                  color: AzulApp,
+              Padding(
+                padding: const EdgeInsets.only(left: 120),
+                child: Center(
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          openwhatsapp(context, "$celular", mensaje.toString());
+                        },
+                        icon: Icon(
+                          whatsapp,
+                          color: Whatsapp,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          final call = Uri.parse('tel:+51 $celular');
+                          if (await canLaunchUrl(call)) {
+                            launchUrl(call);
+                          } else {
+                            throw 'Could not launch $call';
+                          }
+                        },
+                        icon: Icon(
+                          phone,
+                          color: AzulApp,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
