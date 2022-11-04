@@ -29,8 +29,6 @@ class LoginBackend {
             dni,
             oUsuario.cdesUser,
             password,
-            "xd",
-            "xd",
             oUsuario.foto,
             oUsuario.dependencia,
           );

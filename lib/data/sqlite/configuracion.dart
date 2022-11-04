@@ -1,20 +1,18 @@
-// ignore_for_file: avoid_print, file_names
-
 import 'dart:io';
 
-import 'package:gore_app/models/UsuarioLite.dart';
+import 'package:gore_app/models/configuracion.dart';
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 
-class DatabaseHelper {
-  static const databaseName = "GORELaLibertad.db";
+class ConfiguracionBack{
+  static const databaseName = "ConfiguracionBack.db";
   static const databaseVersion = 1;
 
-  static const table = 'Usuario';
+  static const table = 'ConfiguracionBack';
 
-  DatabaseHelper._privateConstructor();
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+  ConfiguracionBack._privateConstructor();
+  static final ConfiguracionBack instance = ConfiguracionBack._privateConstructor();
 
   static Database? _database;
   Future<Database?> get database async {
@@ -45,12 +43,9 @@ class DatabaseHelper {
   Future _onCreate(Database db, int version) async {
     try {
       await db.execute('''
-          CREATE TABLE Usuario (
+          CREATE TABLE ConfiguracionBack (
             DNI TEXT PRIMARY KEY,
-            vUsuNick TEXT NOT NULL,
-            vUsuContrasenia TEXT NOT NULL,
-            foto TEXT,
-            dependencia TEXT NOT NULL
+            foto TEXT
           )
           ''');
     } catch (ex) {
@@ -59,17 +54,12 @@ class DatabaseHelper {
     }
   }
 
-  Future _update() async {
-    Database? db = await instance.database;
-    //await db!.update("Usuario", );
-  }
-
   // Helper methods
-  Future<int> insert(UsuarioLite oUsuarioLite) async {
+  Future<int> insert(ConfiguracionUsuario configuracionUsuario) async {
     int response = 0;
     try {
       Database? db = await instance.database;
-      response = await db!.insert(table, oUsuarioLite.toMapForDb());
+      response = await db!.insert(table, configuracionUsuario.toMapForDb());
     } catch (ex) {
       // Here I want to know what caused exception.
       print('Failed to insert: $ex');
@@ -83,26 +73,21 @@ class DatabaseHelper {
         await db!.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
-  Future<UsuarioLite?> getUsuario() async {
+  Future<ConfiguracionUsuario?> getUsuarioConfiguracion() async {
     Database? db = await instance.database;
-    List<Map<String, dynamic>> maps = await db!.query("Usuario");
+    List<Map<String, dynamic>> maps = await db!.query("ConfiguracionBack");
     if (maps.isNotEmpty) {
       // if (maps.length > 0) {
 
-      return UsuarioLite.fromBD(maps.first);
+      return ConfiguracionUsuario.fromDB(maps.first);
     }
     return null;
   }
-
-  /* Future<int> update(UsuarioLite usuarioLite, String foto) async {
+  Future<int> update(String foto) async {
+    ConfiguracionUsuario? configuracionUsuario;
     Database? db = await instance.database;
-    return await db!.update(table, usuarioLite.toMapForDb(),
-        where: 'foto = ?', whereArgs: [usuarioLite.foto]);
-  }*/
-
-  Future<int> update(String id, String foto) async {
-    Database? db = await instance.database;
-    return await db!
-        .rawUpdate('UPDATE Usuario SET foto = $foto  WHERE DNI = $id}');
+    return await db!.update(table, configuracionUsuario!.toMapForDb(),
+        where: 'foto = $foto', whereArgs: [configuracionUsuario.dni]);
   }
+
 }

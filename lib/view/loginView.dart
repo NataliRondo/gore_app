@@ -168,12 +168,12 @@ class _LoginView extends State<LoginView> implements LoginContract {
 
   @override
   Future<void> onLoginSuccess(Usuario user) async {
-    showInSnackBar("Ingresando..");
+    //showInSnackBar("Ingresando..");
     //Navigator.of(_ctx).pushReplacementNamed("/home");
     Navigator.of(context).pushReplacement(//new
         MaterialPageRoute(
             settings: const RouteSettings(name: '/home'), //new
-            builder: (context) => PantallaInicio(oUsuario: user) //new
+            builder: (context) => PantallaInicio(oUsuario: user,) //new
             ));
   }
 }

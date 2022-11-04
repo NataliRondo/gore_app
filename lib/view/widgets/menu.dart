@@ -1,10 +1,10 @@
-// @dart=2.9
+
+// ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
@@ -13,14 +13,8 @@ import 'package:gore_app/view/cumple.dart';
 import 'package:gore_app/view/notificaciones.dart';
 import 'package:gore_app/view/soporteView.dart';
 
-Uint8List obtenerFoto(UsuarioLite usuarioLite) {
-   Uint8List bytes = base64.decode(usuarioLite.foto.split(',').last);
-  return bytes;
-}
-
-
-menuDrawer(BuildContext context, UsuarioLite usuarioLite) {
-  Uint8List bytes = obtenerFoto(usuarioLite);
+menuDrawer(BuildContext context, String foto, String nombre) {
+  Uint8List bytes = base64.decode(foto.split(',').last);
   ResponsiveApp responsiveApp = ResponsiveApp(context);
   return Drawer(
     child: ListView(
@@ -58,7 +52,7 @@ menuDrawer(BuildContext context, UsuarioLite usuarioLite) {
                       width: double.infinity,
                       child: Center(
                         child: Text(
-                          usuarioLite.vUsuNick,
+                          nombre,
                           //oUsuario.persona.vPerApellidos,
                           textAlign: TextAlign.right,
                           style: fontStyle,
