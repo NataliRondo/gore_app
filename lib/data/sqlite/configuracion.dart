@@ -23,7 +23,7 @@ class ConfiguracionBack{
 
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = "";
+    String path= "";
     try {
       path = join(documentsDirectory.path, databaseName);
     } catch (ex) {

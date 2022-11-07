@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_logic_in_create_state, deprecated_member_use, unnecessary_null_comparison, prefer_typing_uninitialized_variables
 // @dart=2.9
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -12,39 +13,91 @@ import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
+import 'package:gore_app/view/widgets/updateDialog.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:new_version/new_version.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 // ignore: must_be_immutable
 class PerfilUsuario extends StatefulWidget {
   Usuario oUsuario;
   UsuarioLite usuarioLite;
-  ConfiguracionUsuario configuracionUsuario;
-  PerfilUsuario(
-      {Key key, this.oUsuario, this.usuarioLite, this.configuracionUsuario})
-      : super(key: key);
+  PerfilUsuario({Key key, this.oUsuario, this.usuarioLite}) : super(key: key);
 
   @override
   _PerfilUsuarioState createState() =>
-      _PerfilUsuarioState(oUsuario, usuarioLite, configuracionUsuario);
+      _PerfilUsuarioState(oUsuario, usuarioLite);
 }
 
 class _PerfilUsuarioState extends State<PerfilUsuario> {
   Usuario oUsuario;
   UsuarioLite usuarioLite;
-  ConfiguracionUsuario configuracionUsuario;
 
   _PerfilUsuarioState(
-      this.oUsuario, this.usuarioLite, this.configuracionUsuario);
+    this.oUsuario,
+    this.usuarioLite,
+  );
 
   bool flag = true;
   String imagePath;
   String imagen64;
   Uint8List bytesConfiguracion;
+  ConfiguracionUsuario configuracionUsuario;
+
+  @override
+  void initState() {
+    obtenerDatos();
+    super.initState();
+
+     final newVersion = NewVersion(
+      androidId: 'org.telegram.messenger',
+    );
+
+    Timer(const Duration(milliseconds: 800), () {
+      checkNewVersion(newVersion);
+    });
+
+    super.initState();
+  }
+
+  void checkNewVersion(NewVersion newVersion) async {
+    final status = await newVersion.getVersionStatus();
+    if(status != null) {
+      if(status.canUpdate) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return UpdateDialog(
+              allowDismissal: true,
+              description: status.releaseNotes,
+              version: status.storeVersion,
+              appLink: status.appStoreLink,
+            );
+          },
+        );
+      }
+    }
+  }
+
+  obtenerDatos() async {
+    final dbHelper = ConfiguracionBack.instance;
+    int allRows = await dbHelper.queryRowCount();
+    if (allRows == 1) {
+      ConfiguracionUsuario usuarioConf =
+          await dbHelper.getUsuarioConfiguracion();
+      setState(() {
+        configuracionUsuario.dni = usuarioConf.dni;
+        configuracionUsuario.foto = usuarioConf.foto;
+        imagen64 = usuarioConf.foto;
+        bytesConfiguracion = obtenerFotoConfiguracion(configuracionUsuario);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     Uint8List bytesUsuarioLite = obtenerFotoUsuario(usuarioLite);
+    //bytesConfiguracion = obtenerFotoConfiguracion(configuracionUsuario);
 
     ResponsiveApp responsiveApp = ResponsiveApp(context);
     String dni = oUsuario.codUser.toString();
@@ -102,105 +155,8 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: imagePath == null
-                          ? bytesConfiguracion == null
-                              ? Stack(
-                                  children: [
-                                    Container(
-                                      width: 150,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 4, color: Colors.white10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              spreadRadius: 2,
-                                              blurRadius: 10,
-                                              color: Colors.black
-                                                  .withOpacity(0.1)),
-                                        ],
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: MemoryImage(bytesUsuarioLite,
-                                              scale: 0.3),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      right: 0,
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                width: 4, color: Colors.white),
-                                            color: Colors.blue),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            opciones(context);
-                                            //print(photofile);
-                                          },
-                                          child: const Icon(
-                                            Icons.edit,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : Stack(
-                                  children: [
-                                    Container(
-                                      width: 150,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 4, color: Colors.white10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              spreadRadius: 2,
-                                              blurRadius: 10,
-                                              color: Colors.black
-                                                  .withOpacity(0.1)),
-                                        ],
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: MemoryImage(bytesConfiguracion,
-                                              scale: 0.3),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      right: 0,
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                width: 4, color: Colors.white),
-                                            color: Colors.blue),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            opciones(context);
-                                            //print(photofile);
-                                          },
-                                          child: const Icon(
-                                            Icons.edit,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                          : Stack(
+                      child: imagen64 != null
+                          ? Stack(
                               children: [
                                 Container(
                                   width: 150,
@@ -215,10 +171,11 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                           color: Colors.black.withOpacity(0.1)),
                                     ],
                                     shape: BoxShape.circle,
-                                  ),
-                                  child: CircleAvatar(
-                                    radius: 5,
-                                    backgroundImage: FileImage(File(imagePath)),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: MemoryImage(bytesConfiguracion,
+                                          scale: 0.3),
+                                    ),
                                   ),
                                 ),
                                 Positioned(
@@ -235,6 +192,54 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                     child: GestureDetector(
                                       onTap: () {
                                         opciones(context);
+                                        //print(photofile);
+                                      },
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          :  Stack(
+                              children: [
+                                Container(
+                                  width: 150,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 4, color: Colors.white10),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          spreadRadius: 2,
+                                          blurRadius: 10,
+                                          color: Colors.black.withOpacity(0.1)),
+                                    ],
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: MemoryImage(bytesUsuarioLite,
+                                          scale: 0.3),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            width: 4, color: Colors.white),
+                                        color: Colors.blue),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        opciones(context);
+                                        //print(photofile);
                                       },
                                       child: const Icon(
                                         Icons.edit,
@@ -345,17 +350,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
     );
   }
 
-  Uint8List obtenerFotoUsuario(UsuarioLite usuarioLite) {
-    Uint8List bytes = base64.decode(usuarioLite.foto.split(',').last);
-    return bytes;
-  }
-
-  Uint8List obtenerFotoConfiguracion(
-      ConfiguracionUsuario configuracionUsuario) {
-    Uint8List bytes = base64.decode(configuracionUsuario.foto.split(',').last);
-    return bytes;
-  }
-
   void pickMedia(ImageSource source) async {
     XFile file;
     final dbHelper = ConfiguracionBack.instance;
@@ -379,13 +373,23 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
           //guardar(imagePath.toString());
         } else {
           if (allRows == 1) {
-                dbHelper.update(configuracionUsuario.foto);
+            dbHelper.update(imagen64);
             //Obtener el usuario
           }
-          
         }
       });
     }
+  }
+
+  Uint8List obtenerFotoUsuario(UsuarioLite usuarioLite) {
+    Uint8List bytes = base64.decode(usuarioLite.foto.split(',').last);
+    return bytes;
+  }
+
+  Uint8List obtenerFotoConfiguracion(
+      ConfiguracionUsuario configuracionUsuario) {
+    Uint8List bytes = base64.decode(configuracionUsuario.foto.split(',').last);
+    return bytes;
   }
 
   opciones(context) {

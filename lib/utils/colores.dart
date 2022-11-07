@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class HexColor extends Color {
   static int _getColor(String hex) {
@@ -16,3 +16,4 @@ Color Tema = HexColor("#162129");
 //Color Whatsapp = HexColor("#128c7e");
 Color Whatsapp = HexColor("#48c757");
 Color colorFondo = HexColor("#004a80");
+Color nuevo = Colors.indigo;

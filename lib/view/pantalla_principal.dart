@@ -6,6 +6,7 @@ import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/view/perfil_usuario.dart';
 import 'package:gore_app/view/widgets/menu.dart';
+import 'package:new_version/new_version.dart';
 
 // ignore: must_be_immutable
 class PantallaInicio extends StatefulWidget {
@@ -25,6 +26,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
   _PantallaInicioState(this.oUsuario, this.usuarioLite);
 
   GlobalKey<ScaffoldState> keyScaffold = GlobalKey();
+  
 
   @override
   Widget build(BuildContext context) {
