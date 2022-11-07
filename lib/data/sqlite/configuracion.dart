@@ -5,14 +5,15 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ConfiguracionBack{
+class ConfiguracionBack {
   static const databaseName = "ConfiguracionBack.db";
   static const databaseVersion = 1;
 
   static const table = 'ConfiguracionBack';
 
   ConfiguracionBack._privateConstructor();
-  static final ConfiguracionBack instance = ConfiguracionBack._privateConstructor();
+  static final ConfiguracionBack instance =
+      ConfiguracionBack._privateConstructor();
 
   static Database? _database;
   Future<Database?> get database async {
@@ -23,7 +24,7 @@ class ConfiguracionBack{
 
   _initDatabase() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path= "";
+    String path = "";
     try {
       path = join(documentsDirectory.path, databaseName);
     } catch (ex) {
@@ -83,13 +84,11 @@ class ConfiguracionBack{
     }
     return null;
   }
-  Future<int> update(String foto) async {
-    ConfiguracionUsuario? configuracionUsuario;
+
+  Future<int> update(
+      String id, ConfiguracionUsuario configuracionUsuario) async {
     Database? db = await instance.database;
-    return await db!.update(table, configuracionUsuario!.toMapForDb(),
-        where: 'foto = $foto', whereArgs: [configuracionUsuario.dni]);
+    return await db!.update(table, configuracionUsuario.toMapForDb(),
+        where: 'DNI = ?', whereArgs: [id]);
   }
-
-  
-
 }

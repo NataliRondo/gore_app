@@ -42,7 +42,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
           },
         ),
       ),
-      drawer: menuDrawer(context, oUsuario!.foto.toString(), oUsuario!.cdesUser.toString(), usuarioLite!.DNI.toString()),
+      drawer: menuDrawer(context, oUsuario!.foto.toString(), oUsuario!.cdesUser.toString(), oUsuario!.codUser.toString()),
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
