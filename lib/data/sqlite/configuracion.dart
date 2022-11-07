@@ -90,4 +90,6 @@ class ConfiguracionBack{
         where: 'foto = $foto', whereArgs: [configuracionUsuario.dni]);
   }
 
+  
+
 }

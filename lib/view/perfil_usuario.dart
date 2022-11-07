@@ -46,7 +46,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
 
   @override
   void initState() {
-    obtenerDatos();
+    //obtenerDatos();
     super.initState();
 
      final newVersion = NewVersion(

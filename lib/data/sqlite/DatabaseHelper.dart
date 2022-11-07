@@ -105,4 +105,14 @@ class DatabaseHelper {
     return await db!
         .rawUpdate('UPDATE Usuario SET foto = $foto  WHERE DNI = $id}');
   }
+
+  Future<int> delete(String id) async {
+    Database? db = await instance.database;
+    return await db!.delete(table, where: 'DNI = ?', whereArgs: [id]);
+  }
+
+  Future cerrarSesion() async{
+    Database? db = await instance.database;
+    await db!.close();
+  }
 }

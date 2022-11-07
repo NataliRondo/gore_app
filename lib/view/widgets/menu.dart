@@ -5,6 +5,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
+import 'package:gore_app/main.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
@@ -13,7 +15,7 @@ import 'package:gore_app/view/cumple.dart';
 import 'package:gore_app/view/notificaciones.dart';
 import 'package:gore_app/view/soporteView.dart';
 
-menuDrawer(BuildContext context, String foto, String nombre) {
+menuDrawer(BuildContext context, String foto, String nombre, String dni) {
   Uint8List bytes = base64.decode(foto.split(',').last);
   ResponsiveApp responsiveApp = ResponsiveApp(context);
   return Drawer(
@@ -125,8 +127,9 @@ menuDrawer(BuildContext context, String foto, String nombre) {
           title: const Text("Cerrar sesión"),
           onTap: () {
             Navigator.of(context).pop();
-            Navigator.push(context,
-                MaterialPageRoute(builder: ((context) => const SoporteView())));
+            final dbHelper = DatabaseHelper.instance;
+            dbHelper.delete(dni);
+            Navigator.pushAndRemoveUntil(context,  MaterialPageRoute(builder: (context) => MyApp()), (route) => false);
           },
         ),
       ],
