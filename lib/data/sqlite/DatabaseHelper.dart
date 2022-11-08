@@ -59,10 +59,6 @@ class DatabaseHelper {
     }
   }
 
-  Future _update() async {
-    Database? db = await instance.database;
-    //await db!.update("Usuario", );
-  }
 
   // Helper methods
   Future<int> insert(UsuarioLite oUsuarioLite) async {

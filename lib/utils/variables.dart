@@ -1,8 +1,6 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gore_app/models/UsuarioLite.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:intl/intl.dart';
 

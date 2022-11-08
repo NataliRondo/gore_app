@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
@@ -64,7 +66,7 @@ notificacion(BuildContext context, String imagen, String titulo, TextStyle textS
 }
 
 class Bar extends StatefulWidget {
-  Bar({Key? key}) : super(key: key);
+  const Bar({Key? key}) : super(key: key);
 
   @override
   State<Bar> createState() => _BarState();
@@ -88,7 +90,7 @@ class _BarState extends State<Bar> {
           ),
           title: Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: const [
               TabBar(
                 tabs: [
                   Tab(

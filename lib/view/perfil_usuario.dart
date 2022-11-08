@@ -1,11 +1,10 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_logic_in_create_state, deprecated_member_use, unnecessary_null_comparison, prefer_typing_uninitialized_variables
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, no_logic_in_create_state, deprecated_member_use, unnecessary_null_comparison, prefer_typing_uninitialized_variables, avoid_print
 // @dart=2.9
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
 import 'package:gore_app/data/sqlite/configuracion.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/configuracion.dart';
@@ -22,33 +21,37 @@ import 'package:qr_flutter/qr_flutter.dart';
 class PerfilUsuario extends StatefulWidget {
   Usuario oUsuario;
   UsuarioLite usuarioLite;
-  PerfilUsuario({Key key, this.oUsuario, this.usuarioLite}) : super(key: key);
+  ConfiguracionUsuario configuracionUsuario;
+  PerfilUsuario(
+      {Key key, this.oUsuario, this.usuarioLite, this.configuracionUsuario})
+      : super(key: key);
 
   @override
   _PerfilUsuarioState createState() =>
-      _PerfilUsuarioState(oUsuario, usuarioLite);
+      _PerfilUsuarioState(oUsuario, usuarioLite, configuracionUsuario);
 }
 
 class _PerfilUsuarioState extends State<PerfilUsuario> {
   Usuario oUsuario;
   UsuarioLite usuarioLite;
+  ConfiguracionUsuario configuracionUsuario;
 
   _PerfilUsuarioState(
-    this.oUsuario,
-    this.usuarioLite,
-  );
+      this.oUsuario, this.usuarioLite, this.configuracionUsuario);
 
   bool flag = true;
   String imagePath;
   String imagen64;
   Uint8List bytesConfiguracion;
-  String id;
   String foto;
-  ConfiguracionUsuario configuracionUsuario;
+  String dni;
 
   @override
   void initState() {
-    obtenerDatos();
+    if (configuracionUsuario == null) {
+      obtenerDatos();
+    }
+
     super.initState();
 
     final newVersion = NewVersion(
@@ -59,7 +62,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
       checkNewVersion(newVersion);
     });
 
-    super.initState();
+    //super.initState();
   }
 
   void checkNewVersion(NewVersion newVersion) async {
@@ -85,290 +88,245 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
     final dbHelper = ConfiguracionBack.instance;
     int allRows = await dbHelper.queryRowCount();
     if (allRows == 1) {
-      ConfiguracionUsuario usuarioConf =
-          await dbHelper.getUsuarioConfiguracion();
-      setState(() {
-        id = usuarioConf.dni;
-        foto = usuarioConf.foto;
-        bytesConfiguracion = obtenerFotoConfiguracion(usuarioConf);
-      });
+      configuracionUsuario = await dbHelper.getUsuarioConfiguracion();
+      bytesConfiguracion =
+          base64.decode(configuracionUsuario.foto.split(',').last);
+      foto = configuracionUsuario.foto;
     }
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Uint8List bytesUsuario = obtenerFotoUsuario(oUsuario);
-    bytesConfiguracion;
 
     ResponsiveApp responsiveApp = ResponsiveApp(context);
-    String dni = oUsuario.codUser.toString();
-    return Scaffold(
-      //key: keyScaffold,
-      body: Column(
-        children: [
-          Container(
-            height: responsiveApp.hp(70),
-            color: colorFondo,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+    dni = oUsuario.codUser.toString();
+    return configuracionUsuario != null
+        ? Scaffold(
+            //key: keyScaffold,
+            body: Column(
               children: [
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(right: responsiveApp.dp(3)),
-                      width: responsiveApp.wp(50),
-                      child: Column(
+                Container(
+                  height: responsiveApp.hp(70),
+                  color: colorFondo,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
                         children: [
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              //"Natali",
-                              oUsuario.cdesUser.toString(),
-                              //oUsuario.persona.vPerApellidos,
-                              textAlign: TextAlign.right,
-                              style: fontStyle,
-                            ),
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              "",
-                              //oUsuario.persona.vPerNombre,
-                              textAlign: TextAlign.right,
-                              style: fontStyle,
-                            ),
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              //"75900795",
-                              dni,
-                              textAlign: TextAlign.right,
-                              style: fontStyle,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: imagen64 != null
-                          ? Stack(
+                          Container(
+                            padding:
+                                EdgeInsets.only(right: responsiveApp.dp(3)),
+                            width: responsiveApp.wp(50),
+                            child: Column(
                               children: [
-                                Container(
-                                  width: 150,
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 4, color: Colors.white10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          spreadRadius: 2,
-                                          blurRadius: 10,
-                                          color: Colors.black.withOpacity(0.1)),
-                                    ],
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(File(imagePath)),
-                                    ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    //"Natali",
+                                    oUsuario.cdesUser.toString(),
+                                    //oUsuario.persona.vPerApellidos,
+                                    textAlign: TextAlign.right,
+                                    style: fontStyle,
                                   ),
                                 ),
-                                Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            width: 4, color: Colors.white),
-                                        color: Colors.blue),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        opciones(context);
-                                        //print(photofile);
-                                      },
-                                      child: const Icon(
-                                        Icons.edit,
-                                        color: Colors.white,
-                                      ),
-                                    ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    "",
+                                    //oUsuario.persona.vPerNombre,
+                                    textAlign: TextAlign.right,
+                                    style: fontStyle,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    //"75900795",
+                                    dni,
+                                    textAlign: TextAlign.right,
+                                    style: fontStyle,
                                   ),
                                 ),
                               ],
-                            )
-                          : foto == null
-                              ? Stack(
-                                  children: [
-                                    Container(
-                                      width: 150,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 4, color: Colors.white10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              spreadRadius: 2,
-                                              blurRadius: 10,
-                                              color: Colors.black
-                                                  .withOpacity(0.1)),
-                                        ],
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: MemoryImage(bytesUsuario),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      right: 0,
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                width: 4, color: Colors.white),
-                                            color: Colors.blue),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            opciones(context);
-                                            //print(photofile);
-                                          },
-                                          child: const Icon(
-                                            Icons.edit,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : Stack(
-                                  children: [
-                                    Container(
-                                      width: 150,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 4, color: Colors.white10),
-                                        boxShadow: [
-                                          BoxShadow(
-                                              spreadRadius: 2,
-                                              blurRadius: 10,
-                                              color: Colors.black
-                                                  .withOpacity(0.1)),
-                                        ],
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: MemoryImage(bytesConfiguracion,
-                                              scale: 0.3),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      bottom: 0,
-                                      right: 0,
-                                      child: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            border: Border.all(
-                                                width: 4, color: Colors.white),
-                                            color: Colors.blue),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            opciones(context);
-                                            //print(photofile);
-                                          },
-                                          child: const Icon(
-                                            Icons.edit,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    //width: responsiveApp.wp(30),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        oUsuario.dependencia.toString(),
-                        textAlign: TextAlign.center,
-                        style: fontStyle,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(
-              responsiveApp.dp(2.5),
-            ),
-            child: Center(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: responsiveApp.hp(55),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(
-                            //left: responsiveApp.dp(3),
-                            top: responsiveApp.dp(4),
+                            ),
                           ),
-                          width: responsiveApp.wp(60),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              QrImage(
-                                //oUsuario.dni + "%Q" + strFecha + "%Q" + strHora,
-                                data: "$dni%Q$strFecha%Q$strHora",
-                                version: 2,
-                                size: responsiveApp.dp(50),
-                              ),
-                            ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: imagen64 != null
+                                ? Stack(
+                                    children: [
+                                      Container(
+                                        width: 150,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 4, color: Colors.white10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                spreadRadius: 2,
+                                                blurRadius: 10,
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
+                                          ],
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: FileImage(File(imagePath)),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  width: 4,
+                                                  color: Colors.white),
+                                              color: Colors.blue),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              opciones(context);
+                                              //print(photofile);
+                                            },
+                                            child: const Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Stack(
+                                    children: [
+                                      Container(
+                                        width: 150,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 4, color: Colors.white10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                spreadRadius: 2,
+                                                blurRadius: 10,
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
+                                          ],
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image:
+                                                MemoryImage(bytesConfiguracion),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  width: 4,
+                                                  color: Colors.white),
+                                              color: Colors.blue),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              opciones(context);
+                                              //print(photofile);
+                                            },
+                                            child: const Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          //width: responsiveApp.wp(30),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              oUsuario.dependencia.toString(),
+                              textAlign: TextAlign.center,
+                              style: fontStyle,
+                            ),
                           ),
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(
+                    responsiveApp.dp(2.5),
+                  ),
+                  child: Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
                         SizedBox(
-                          width: responsiveApp.wp(35),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                          height: responsiveApp.hp(55),
+                          child: Row(
                             children: [
-                              SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  strFecha,
-                                  textAlign: TextAlign.center,
-                                  style: fontStyleHora,
+                              Container(
+                                padding: EdgeInsets.only(
+                                  //left: responsiveApp.dp(3),
+                                  top: responsiveApp.dp(4),
+                                ),
+                                width: responsiveApp.wp(60),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    QrImage(
+                                      //oUsuario.dni + "%Q" + strFecha + "%Q" + strHora,
+                                      data: "$dni%Q$strFecha%Q$strHora",
+                                      version: 2,
+                                      size: responsiveApp.dp(50),
+                                    ),
+                                  ],
                                 ),
                               ),
                               SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  strHora,
-                                  textAlign: TextAlign.center,
-                                  style: fontStyleHora,
+                                width: responsiveApp.wp(35),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: Text(
+                                        strFecha,
+                                        textAlign: TextAlign.center,
+                                        style: fontStyleHora,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: Text(
+                                        strHora,
+                                        textAlign: TextAlign.center,
+                                        style: fontStyleHora,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -377,25 +335,323 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(
+                    top: responsiveApp.dp(20),
+                  ),
+                  child: Image.asset(
+                    "src/logo_horz.png",
+                    height: responsiveApp.hp(10),
+                    width: responsiveApp.wp(40),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ],
             ),
-          ),
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(
-              top: responsiveApp.dp(20),
+          )
+        : Scaffold(
+            //key: keyScaffold,
+            body: Column(
+              children: [
+                Container(
+                  height: responsiveApp.hp(70),
+                  color: colorFondo,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding:
+                                EdgeInsets.only(right: responsiveApp.dp(3)),
+                            width: responsiveApp.wp(50),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    //"Natali",
+                                    oUsuario.cdesUser.toString(),
+                                    //oUsuario.persona.vPerApellidos,
+                                    textAlign: TextAlign.right,
+                                    style: fontStyle,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    "",
+                                    //oUsuario.persona.vPerNombre,
+                                    textAlign: TextAlign.right,
+                                    style: fontStyle,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    //"75900795",
+                                    dni,
+                                    textAlign: TextAlign.right,
+                                    style: fontStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: imagen64 != null
+                                ? Stack(
+                                    children: [
+                                      Container(
+                                        width: 150,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 4, color: Colors.white10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                spreadRadius: 2,
+                                                blurRadius: 10,
+                                                color: Colors.black
+                                                    .withOpacity(0.1)),
+                                          ],
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: FileImage(File(imagePath)),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        bottom: 0,
+                                        right: 0,
+                                        child: Container(
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  width: 4,
+                                                  color: Colors.white),
+                                              color: Colors.blue),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              opciones(context);
+                                              //print(photofile);
+                                            },
+                                            child: const Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : foto != null
+                                    ? Stack(
+                                        children: [
+                                          Container(
+                                            width: 150,
+                                            height: 150,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  width: 4,
+                                                  color: Colors.white10),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    spreadRadius: 2,
+                                                    blurRadius: 10,
+                                                    color: Colors.black
+                                                        .withOpacity(0.1)),
+                                              ],
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: MemoryImage(
+                                                    bytesConfiguracion),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: 0,
+                                            right: 0,
+                                            child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      width: 4,
+                                                      color: Colors.white),
+                                                  color: Colors.blue),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  opciones(context);
+                                                  //print(photofile);
+                                                },
+                                                child: const Icon(
+                                                  Icons.edit,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Stack(
+                                        children: [
+                                          Container(
+                                            width: 150,
+                                            height: 150,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  width: 4,
+                                                  color: Colors.white10),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    spreadRadius: 2,
+                                                    blurRadius: 10,
+                                                    color: Colors.black
+                                                        .withOpacity(0.1)),
+                                              ],
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: MemoryImage(bytesUsuario,
+                                                    scale: 0.3),
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: 0,
+                                            right: 0,
+                                            child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      width: 4,
+                                                      color: Colors.white),
+                                                  color: Colors.blue),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  opciones(context);
+                                                  //print(photofile);
+                                                },
+                                                child: const Icon(
+                                                  Icons.edit,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          //width: responsiveApp.wp(30),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              oUsuario.dependencia.toString(),
+                              textAlign: TextAlign.center,
+                              style: fontStyle,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(
+                    responsiveApp.dp(2.5),
+                  ),
+                  child: Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: responsiveApp.hp(55),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(
+                                  //left: responsiveApp.dp(3),
+                                  top: responsiveApp.dp(4),
+                                ),
+                                width: responsiveApp.wp(60),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    QrImage(
+                                      //oUsuario.dni + "%Q" + strFecha + "%Q" + strHora,
+                                      data: "$dni%Q$strFecha%Q$strHora",
+                                      version: 2,
+                                      size: responsiveApp.dp(50),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: responsiveApp.wp(35),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: Text(
+                                        strFecha,
+                                        textAlign: TextAlign.center,
+                                        style: fontStyleHora,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: double.infinity,
+                                      child: Text(
+                                        strHora,
+                                        textAlign: TextAlign.center,
+                                        style: fontStyleHora,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  padding: EdgeInsets.only(
+                    top: responsiveApp.dp(20),
+                  ),
+                  child: Image.asset(
+                    "src/logo_horz.png",
+                    height: responsiveApp.hp(10),
+                    width: responsiveApp.wp(40),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ],
             ),
-            child: Image.asset(
-              "src/logo_horz.png",
-              height: responsiveApp.hp(10),
-              width: responsiveApp.wp(40),
-              fit: BoxFit.contain,
-            ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 
   void pickMedia(ImageSource source) async {
@@ -409,13 +665,13 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
         imagen64 =
             "data:image/png;base64,${base64Encode(File(imagePath).readAsBytesSync())}";
         var x = "Imagen tomada-> $imagen64";
-        var y = "Imagen de la base de datos -> ${usuarioLite.foto}";
+        //var y = "Imagen de la base de datos -> ${usuarioLite.foto}";
         print(x);
-        print(y);
+        //print(y);
 
         if (allRows == 0) {
           ConfiguracionUsuario configuracionUsuario =
-              ConfiguracionUsuario(usuarioLite.DNI, imagen64);
+              ConfiguracionUsuario(dni, imagen64);
           dbHelper.insert(configuracionUsuario);
           bytesConfiguracion =
               base64.decode(configuracionUsuario.foto.split(',').last);
@@ -436,12 +692,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
 
   Uint8List obtenerFotoUsuario(Usuario oUsuario) {
     Uint8List bytes = base64.decode(oUsuario.foto.split(',').last);
-    return bytes;
-  }
-
-  Uint8List obtenerFotoConfiguracion(
-      ConfiguracionUsuario configuracionUsuario) {
-    Uint8List bytes = base64.decode(configuracionUsuario.foto.split(',').last);
     return bytes;
   }
 
@@ -544,12 +794,5 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
             ),
           );
         });
-  }
-
-  guardar(String imagen) async {
-    final dbHelper = DatabaseHelper.instance;
-    UsuarioLite oUsuarioLite = UsuarioLite(oUsuario.cdesUser,
-        usuarioLite.vUsuContrasenia, imagen, oUsuario.codUser, "");
-    await dbHelper.insert(oUsuarioLite);
   }
 }

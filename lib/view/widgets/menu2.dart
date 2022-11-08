@@ -1,4 +1,4 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe, unnecessary_null_comparison
+// ignore_for_file: unnecessary_null_comparison
 
 import 'dart:convert';
 
@@ -15,15 +15,14 @@ import 'package:gore_app/view/cumple.dart';
 import 'package:gore_app/view/notificaciones.dart';
 import 'package:gore_app/view/soporteView.dart';
 
-menuDrawer(BuildContext context, String foto, String nombre, String dni,
-    ConfiguracionUsuario configuracionUsuario) {
+menu2 (BuildContext context, String foto, String nombre, String dni,) {
   //ConfiguracionUsuario? configuracionUsuario;
   String? fotoGuardada;
   Uint8List? bytesConfiguracion;
   Uint8List bytes = base64.decode(foto.split(',').last);
   ResponsiveApp responsiveApp = ResponsiveApp(context);
 
-  fotoGuardada = configuracionUsuario.foto!;
+  fotoGuardada = ConfiguracionUsuario(dni, foto).foto!;
   bytesConfiguracion = base64.decode(fotoGuardada.split(',').last);
 
   return Drawer(
@@ -147,7 +146,7 @@ menuDrawer(BuildContext context, String foto, String nombre, String dni,
           onTap: () {
             Navigator.of(context).pop();
             final dbHelper = DatabaseHelper.instance;
-            dbHelper.cerrarSesion();
+            dbHelper.delete(dni);
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => const MyApp()),

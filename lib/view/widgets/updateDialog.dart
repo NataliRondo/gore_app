@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -180,7 +182,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
                                   BoxShadow(
                                     color: AzulApp,
                                     blurRadius: 10,
-                                    offset: Offset(2, 2),
+                                    offset: const Offset(2, 2),
                                   ),
                                 ],
                               ),

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, unused_element, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';

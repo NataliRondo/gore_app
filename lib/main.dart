@@ -3,13 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/loginDA.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
+import 'package:gore_app/data/sqlite/configuracion.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
+import 'package:gore_app/models/configuracion.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/routes.dart';
 import 'package:gore_app/view/loginView.dart';
 import 'package:gore_app/view/pantalla_principal.dart';
 import 'package:splashscreen/splashscreen.dart';
-
 
 void main() {
   //initializeDateFormatting().then((_) => runApp(const MyApp()));
@@ -27,19 +28,33 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   loadWidget() async {
     final dbHelper = DatabaseHelper.instance;
+    final dbHelperConf = ConfiguracionBack.instance;
     int allRows = await dbHelper.queryRowCount();
+    int allRowsConf = await dbHelperConf.queryRowCount();
     if (allRows == 1) {
       UsuarioLite oUsarioLite = await dbHelper.getUsuario();
+      ConfiguracionUsuario configuracionUsuario =
+          await dbHelperConf.getUsuarioConfiguracion();
       loginDA api = loginDA();
       // ignore: use_build_context_synchronously
       Usuario oUsuario = await api.login(oUsarioLite.DNI.toString(),
           oUsarioLite.vUsuContrasenia.toString(), context);
       if (oUsuario != null) {
+        if(allRowsConf == 1){
+          return await Future<Widget>.delayed(
+            const Duration(seconds: 1),
+            () => PantallaInicio(
+                  oUsuario: oUsuario,
+                  usuarioLite: oUsarioLite,
+                  configuracionUsuario: configuracionUsuario,
+                ));
+        }
         return await Future<Widget>.delayed(
             const Duration(seconds: 1),
             () => PantallaInicio(
                   oUsuario: oUsuario,
                   usuarioLite: oUsarioLite,
+                  
                 ));
       } else {
         return await Future<Widget>.delayed(

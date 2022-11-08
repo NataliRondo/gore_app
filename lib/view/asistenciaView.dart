@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, missing_return, unused_element, avoid_print, unused_field
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/clean_calendar_event.dart';
