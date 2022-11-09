@@ -48,3 +48,4 @@ var formatters = [
   //FilteringTextInputFormatter.allow(RegExp('[0-9]')),
 ];
 
+DateFormat dateFormat = DateFormat("yyyy-MM-dd");

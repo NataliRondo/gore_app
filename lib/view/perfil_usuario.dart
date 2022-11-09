@@ -50,6 +50,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
   void initState() {
     if (configuracionUsuario == null) {
       obtenerDatos();
+      setState(() {});
     }
 
     super.initState();
@@ -93,10 +94,12 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
           base64.decode(configuracionUsuario.foto.split(',').last);
       foto = configuracionUsuario.foto;
     }
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    setState(() {});
     Uint8List bytesUsuario = obtenerFotoUsuario(oUsuario);
 
     ResponsiveApp responsiveApp = ResponsiveApp(context);
@@ -194,6 +197,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                             onTap: () {
                                               opciones(context);
                                               //print(photofile);
+                                              setState(() {});
                                             },
                                             child: const Icon(
                                               Icons.edit,
@@ -494,6 +498,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                                 onTap: () {
                                                   opciones(context);
                                                   //print(photofile);
+                                                  setState(() {});
                                                 },
                                                 child: const Icon(
                                                   Icons.edit,
@@ -544,6 +549,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                                 onTap: () {
                                                   opciones(context);
                                                   //print(photofile);
+                                                  setState(() {});
                                                 },
                                                 child: const Icon(
                                                   Icons.edit,
@@ -769,6 +775,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).pop();
+                      setState(() {});
                     },
                     child: Container(
                       padding: const EdgeInsets.all(20),

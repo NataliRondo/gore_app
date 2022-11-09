@@ -11,24 +11,25 @@ class Asistencias {
         this.hora,
     });
 
-    NombreDia? nombreDia;
+    String? nombreDia;
     DateTime? fecha;
     String? hora;
 
     factory Asistencias.fromJson(Map<String, dynamic> json) => Asistencias(
-        nombreDia: nombreDiaValues.map![json["NombreDia"]],
+        nombreDia: json["NombreDia"],
         fecha: DateTime.parse(json["Fecha"]),
         hora: json["Hora"],
     );
 
     Map<String, dynamic> toJson() => {
-        "NombreDia": nombreDiaValues.reverse[nombreDia],
+        "NombreDia": nombreDia,
         "Fecha": "${fecha!.year.toString().padLeft(4, '0')}-${fecha!.month.toString().padLeft(2, '0')}-${fecha!.day.toString().padLeft(2, '0')}",
         "Hora": hora,
     };
 }
 
 // ignore: constant_identifier_names
+/*
 enum NombreDia { MARTES, LUNES, VIERNES, JUEVES, MIRCOLES }
 
 final nombreDiaValues = EnumValues({
@@ -49,4 +50,6 @@ class EnumValues<T> {
         reverseMap ??= map!.map((k, v) =>  MapEntry(v, k));
         return reverseMap!;
     }
+    
 }
+*/

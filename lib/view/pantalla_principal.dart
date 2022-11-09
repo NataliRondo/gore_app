@@ -38,10 +38,11 @@ class _PantallaInicioState extends State<PantallaInicio> {
 
   @override
   void initState() {
-    if(configuracionUsuario == null){
+    if (configuracionUsuario == null) {
       obtenerDatos();
     }
     super.initState();
+    setState(() {});
   }
 
   obtenerDatos() async {
@@ -51,6 +52,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
       configuracionUsuario = await dbHelper.getUsuarioConfiguracion();
       datos = true;
     }
+    setState(() {});
   }
 
   @override
@@ -66,6 +68,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                 onPressed: () async {
                   keyScaffold.currentState!.openDrawer();
                   obtenerDatos();
+                  setState(() {});
                 },
               ),
             ),
@@ -74,11 +77,13 @@ class _PantallaInicioState extends State<PantallaInicio> {
                 oUsuario!.foto.toString(),
                 oUsuario!.cdesUser.toString(),
                 oUsuario!.codUser.toString(),
-                configuracionUsuario!),
+                configuracionUsuario!,
+                oUsuario!),
             body: GestureDetector(
               onTap: () {
                 FocusScope.of(context).unfocus();
                 obtenerDatos();
+                setState(() {});
               },
               child: PerfilUsuario(
                 oUsuario: oUsuario,
@@ -97,6 +102,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                   keyScaffold.currentState!.openDrawer();
                   if (configuracionUsuario != null) {
                     obtenerDatos();
+                    setState(() {});
                   }
                 },
               ),
@@ -107,18 +113,20 @@ class _PantallaInicioState extends State<PantallaInicio> {
                     oUsuario!.foto.toString(),
                     oUsuario!.cdesUser.toString(),
                     oUsuario!.codUser.toString(),
-                  )
+                    oUsuario!)
                 : menuDrawer(
                     context,
                     oUsuario!.foto.toString(),
                     oUsuario!.cdesUser.toString(),
                     oUsuario!.codUser.toString(),
-                    configuracionUsuario!),
+                    configuracionUsuario!,
+                    oUsuario!),
             body: GestureDetector(
               onTap: () {
                 FocusScope.of(context).unfocus();
                 if (configuracionUsuario != null) {
                   obtenerDatos();
+                  setState(() {});
                 }
               },
               child: PerfilUsuario(

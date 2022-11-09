@@ -1,21 +1,23 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
-import 'package:gore_app/main.dart';
+import 'package:flutter/services.dart';
 import 'package:gore_app/models/configuracion.dart';
+import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/asistenciaView.dart';
 import 'package:gore_app/view/cumple.dart';
 import 'package:gore_app/view/notificaciones.dart';
+import 'package:gore_app/view/prueba.dart';
 import 'package:gore_app/view/soporteView.dart';
 
-menu2 (BuildContext context, String foto, String nombre, String dni,) {
+menu2(BuildContext context, String foto, String nombre, String dni,
+    Usuario usuario) {
   //ConfiguracionUsuario? configuracionUsuario;
   String? fotoGuardada;
   Uint8List? bytesConfiguracion;
@@ -96,7 +98,9 @@ menu2 (BuildContext context, String foto, String nombre, String dni,) {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: ((context) => const AsistenciaView())));
+                    builder: ((context) => Prueba(
+                          usuario: usuario,
+                        ))));
           },
         ),
         ListTile(
@@ -145,12 +149,13 @@ menu2 (BuildContext context, String foto, String nombre, String dni,) {
           title: const Text("Cerrar sesión"),
           onTap: () {
             Navigator.of(context).pop();
-            final dbHelper = DatabaseHelper.instance;
-            dbHelper.delete(dni);
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const MyApp()),
-                (route) => false);
+            //final dbHelper = DatabaseHelper.instance;
+            //dbHelper.cerrarSesion();
+            if (Platform.isAndroid) {
+              SystemNavigator.pop();
+            } else if (Platform.isIOS) {
+              exit(0);
+            }
           },
         ),
       ],

@@ -1,22 +1,26 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, unnecessary_null_comparison
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
 import 'package:gore_app/main.dart';
 import 'package:gore_app/models/configuracion.dart';
+import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/asistenciaView.dart';
 import 'package:gore_app/view/cumple.dart';
 import 'package:gore_app/view/notificaciones.dart';
+import 'package:gore_app/view/prueba.dart';
 import 'package:gore_app/view/soporteView.dart';
 
 menuDrawer(BuildContext context, String foto, String nombre, String dni,
-    ConfiguracionUsuario configuracionUsuario) {
+    ConfiguracionUsuario configuracionUsuario, Usuario usuario) {
   //ConfiguracionUsuario? configuracionUsuario;
   String? fotoGuardada;
   Uint8List? bytesConfiguracion;
@@ -97,7 +101,9 @@ menuDrawer(BuildContext context, String foto, String nombre, String dni,
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: ((context) => const AsistenciaView())));
+                    builder: ((context) => Prueba(
+                          usuario: usuario,
+                        ))));
           },
         ),
         ListTile(
@@ -145,13 +151,11 @@ menuDrawer(BuildContext context, String foto, String nombre, String dni,
           ),
           title: const Text("Cerrar sesión"),
           onTap: () {
-            Navigator.of(context).pop();
-            final dbHelper = DatabaseHelper.instance;
-            dbHelper.cerrarSesion();
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const MyApp()),
-                (route) => false);
+            if (Platform.isAndroid) {
+              SystemNavigator.pop();
+            } else if (Platform.isIOS) {
+              exit(0);
+            }
           },
         ),
       ],

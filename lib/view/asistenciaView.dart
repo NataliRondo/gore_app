@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/clean_calendar_event.dart';
 import 'package:gore_app/utils/colores.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class AsistenciaView extends StatefulWidget {
@@ -15,6 +16,7 @@ class AsistenciaView extends StatefulWidget {
 class _AsistenciaViewState extends State<AsistenciaView> {
   DateTime _focusedDay;
   DateTime _selectedDay;
+  DateFormat dateFormat = DateFormat("yyyy-MM-dd");
   List<CleanCalendarEvent> _selectedEvent;
 
   final Map<DateTime, List<CleanCalendarEvent>> events = {
@@ -82,6 +84,8 @@ class _AsistenciaViewState extends State<AsistenciaView> {
                       _focusedDay = focusedDay;
                       _selectedDay = selectedDay;
                     });
+                    _selectedDay.day;
+                    print(dateFormat.format(_selectedDay));
                   },
                   //locale: "es_ES",
                   focusedDay: _focusedDay,

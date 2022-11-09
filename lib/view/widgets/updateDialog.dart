@@ -61,13 +61,12 @@ class _UpdateDialogState extends State<UpdateDialog> {
         Container(
           height: screenHeight / 10,
           width: screenWidth / 1.5,
-          decoration:  BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(20),
-              topLeft: Radius.circular(20),
-            ),
-            color: AzulApp
-          ),
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(20),
+                topLeft: Radius.circular(20),
+              ),
+              color: AzulApp),
           child: const Center(
             child: Icon(
               Icons.error_outline_outlined,
@@ -141,6 +140,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.pop(context);
+                                    setState(() {});
                                   },
                                   child: Container(
                                     height: 30,
@@ -178,7 +178,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: AzulApp,
-                                boxShadow:  [
+                                boxShadow: [
                                   BoxShadow(
                                     color: AzulApp,
                                     blurRadius: 10,
