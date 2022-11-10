@@ -79,23 +79,11 @@ class _PruebaState extends State<Prueba> {
                   },
                   //locale: "es_ES",
                   focusedDay: _focusedDay,
-                  firstDay: DateTime.now(),
+                  firstDay: DateTime.utc(DateTime.now().year, DateTime.now().month, 1),
                   lastDay: DateTime.now().add(const Duration(days: 30)),
                 ),
               ),
             ),
-            /*
-            FutureBuilder(
-              future: servicioAsistencia.getAsistenciaDia(dni, token, _selectedDay),
-              builder: (context, snapshot) {
-                Dia asistencia = snapshot.data;
-              if (snapshot.hasData) {
-                return asistenciaWidget(asistencia.nombreDia, asistencia.hora, asistencia.fecha);
-              } else{
-                return Container();
-              }
-            },),
-            */
             ListaAsistencias(usuario: usuario,day: _selectedDay,)
           ],
         ),

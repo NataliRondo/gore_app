@@ -57,11 +57,11 @@ class _ListaAsistenciasState extends State<ListaAsistencias> {
                               subtitle: Column(
                                 children: [
                                   Text(
-                                    "Hora: ${asistencia.hora}",
+                                    "Fecha: ${dateFormat.format(asistencia.fecha!)}",
                                     textAlign: TextAlign.right,
                                   ),
                                   Text(
-                                    "Fecha: ${dateFormat.format(asistencia.fecha!)}",
+                                    "Hora: ${asistencia.hora}",
                                     textAlign: TextAlign.right,
                                   ),
                                 ],
@@ -76,7 +76,14 @@ class _ListaAsistenciasState extends State<ListaAsistencias> {
             ),
           );
         } else {
-          return const Text("data");
+          return Column(
+            children: const [
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: CircularProgressIndicator(),
+              ),
+            ],
+          );
         }
       },
     );
