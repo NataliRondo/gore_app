@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
+import 'package:gore_app/view/asistenciaView.dart';
 import 'package:gore_app/view/cumple.dart';
 import 'package:gore_app/view/notificaciones.dart';
 import 'package:gore_app/view/prueba.dart';
@@ -24,7 +25,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: ((context) => Prueba(
+                  builder: ((context) => AsistenciaView(
                         usuario: usuario,
                       ))));
         },
