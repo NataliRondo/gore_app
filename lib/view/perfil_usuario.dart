@@ -48,10 +48,11 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
 
   @override
   void initState() {
-    if (configuracionUsuario == null) {
-      obtenerDatos();
-      setState(() {});
-    }
+    setState(() {
+      if (configuracionUsuario == null) {
+        obtenerDatos();
+      }
+    });
 
     super.initState();
 
@@ -93,6 +94,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
       bytesConfiguracion =
           base64.decode(configuracionUsuario.foto.split(',').last);
       foto = configuracionUsuario.foto;
+      setState(() {});
     }
     setState(() {});
   }
@@ -197,7 +199,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                             onTap: () {
                                               opciones(context);
                                               //print(photofile);
-                                              setState(() {});
+                                              //setState(() {});
                                             },
                                             child: const Icon(
                                               Icons.edit,
@@ -247,6 +249,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                             onTap: () {
                                               opciones(context);
                                               //print(photofile);
+                                              //setState(() {});
                                             },
                                             child: const Icon(
                                               Icons.edit,
@@ -446,6 +449,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                           child: GestureDetector(
                                             onTap: () {
                                               opciones(context);
+                                              //setState(() {});
                                               //print(photofile);
                                             },
                                             child: const Icon(
@@ -498,7 +502,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                                 onTap: () {
                                                   opciones(context);
                                                   //print(photofile);
-                                                  setState(() {});
+                                                  //setState(() {});
                                                 },
                                                 child: const Icon(
                                                   Icons.edit,
@@ -549,7 +553,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                                 onTap: () {
                                                   opciones(context);
                                                   //print(photofile);
-                                                  setState(() {});
+                                                  //setState(() {});
                                                 },
                                                 child: const Icon(
                                                   Icons.edit,
@@ -685,8 +689,8 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
         } else {
           if (allRows == 1) {
             ConfiguracionUsuario configuracionUsuario =
-                ConfiguracionUsuario(usuarioLite.DNI, imagen64);
-            dbHelper.update(usuarioLite.DNI, configuracionUsuario);
+                ConfiguracionUsuario(dni, imagen64);
+            dbHelper.update(dni, configuracionUsuario);
             bytesConfiguracion =
                 base64.decode(configuracionUsuario.foto.split(',').last);
             //Obtener el usuario
@@ -694,6 +698,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
         }
       });
     }
+    setState(() {});
   }
 
   Uint8List obtenerFotoUsuario(Usuario oUsuario) {
