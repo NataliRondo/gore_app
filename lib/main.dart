@@ -10,11 +10,17 @@ import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/routes.dart';
 import 'package:gore_app/view/loginView.dart';
 import 'package:gore_app/view/pantalla_principal.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   //initializeDateFormatting().then((_) => runApp(const MyApp()));
-  runApp(const MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
+  initializeDateFormatting().then((_) =>runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MyApp(),
+    ),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -40,21 +46,20 @@ class _MyAppState extends State<MyApp> {
       Usuario oUsuario = await api.login(oUsarioLite.DNI.toString(),
           oUsarioLite.vUsuContrasenia.toString(), context);
       if (oUsuario != null) {
-        if(allRowsConf == 1){
+        if (allRowsConf == 1) {
           return await Future<Widget>.delayed(
-            const Duration(seconds: 1),
-            () => PantallaInicio(
-                  oUsuario: oUsuario,
-                  usuarioLite: oUsarioLite,
-                  configuracionUsuario: configuracionUsuario,
-                ));
+              const Duration(seconds: 1),
+              () => PantallaInicio(
+                    oUsuario: oUsuario,
+                    usuarioLite: oUsarioLite,
+                    configuracionUsuario: configuracionUsuario,
+                  ));
         }
         return await Future<Widget>.delayed(
             const Duration(seconds: 1),
             () => PantallaInicio(
                   oUsuario: oUsuario,
                   usuarioLite: oUsarioLite,
-                  
                 ));
       } else {
         return await Future<Widget>.delayed(

@@ -36,22 +36,16 @@ class _PantallaInicioState extends State<PantallaInicio> {
       this.oUsuario, this.usuarioLite, this.configuracionUsuario);
 
   GlobalKey<ScaffoldState> keyScaffold = GlobalKey();
-  Key _key = UniqueKey();
   bool datos = false;
   String? fotoGuardada;
 
   @override
   void initState() {
-    _handleLocalChanged();
     super.initState();
     if (configuracionUsuario != null || configuracionUsuario == null) {
       obtenerDatos();
     }
   }
-
-  void _handleLocalChanged() => setState(() {
-        _key = UniqueKey();
-      });
 
   obtenerDatos() async {
     final dbHelper = ConfiguracionBack.instance;
@@ -79,7 +73,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           icon: const Icon(Icons.menu),
           onPressed: () async {
-            setState(() {});
+            //setState(() {});
             keyScaffold.currentState!.openDrawer();
             obtenerDatos();
           },

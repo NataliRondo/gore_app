@@ -2,13 +2,12 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/servicio_asistencia.dart';
-import 'package:gore_app/models/asistencias.dart';
-import 'package:gore_app/models/dia.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/listaAsistencias.dart';
 import 'package:gore_app/view/widgets/asistencia_widget.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Prueba extends StatefulWidget {
@@ -25,7 +24,6 @@ class _PruebaState extends State<Prueba> {
 
   DateTime _focusedDay;
   DateTime _selectedDay;
-  
 
   ServicioAsistencia servicioAsistencia = ServicioAsistencia();
 
@@ -68,6 +66,14 @@ class _PruebaState extends State<Prueba> {
                 color: const Color.fromARGB(255, 242, 249, 255),
                 elevation: 3,
                 child: TableCalendar(
+                  //locale: Localizations.localeOf(context).toString(),
+                  locale: 'ES',
+
+                  headerStyle: HeaderStyle(
+                      titleCentered: true,
+                      formatButtonVisible: false,
+                      titleTextFormatter: (date, locale) =>
+                          DateFormat.yMMMM(locale).format(date).toCapitalize()),
                   selectedDayPredicate: (day) => _selectedDay == day,
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
@@ -75,19 +81,29 @@ class _PruebaState extends State<Prueba> {
                       _selectedDay = selectedDay;
                     });
                     _selectedDay.day;
-                    //print(dateFormat.format(_selectedDay));
+                    print(dateFormat.format(_selectedDay));
                   },
                   //locale: "es_ES",
                   focusedDay: _focusedDay,
-                  firstDay: DateTime.utc(DateTime.now().year, DateTime.now().month, 1),
+                  firstDay: DateTime.utc(
+                      DateTime.now().year, DateTime.now().month, 1),
                   lastDay: DateTime.now().add(const Duration(days: 30)),
                 ),
               ),
             ),
-            ListaAsistencias(usuario: usuario,day: _selectedDay,)
+            ListaAsistencias(
+              usuario: usuario,
+              day: _selectedDay,
+            )
           ],
         ),
       ),
     );
   }
+}
+
+extension StringCasingExtension on String {
+  String toCapitalize() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  // String yourStringModifyingMethod() => write your logic here to modify the string as per your need;
 }
