@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -49,3 +51,5 @@ var formatters = [
 ];
 
 DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+var colorRandom =
+        Colors.primaries[Random().nextInt(Colors.primaries.length)];

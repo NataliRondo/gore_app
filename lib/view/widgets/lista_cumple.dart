@@ -15,11 +15,11 @@ tarjetaCumple(
       padding: const EdgeInsets.all(10),
       child: FlipCard(
         front: Card(
-          color: front,
+          color: colorFondo,
           elevation: 3,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
-            side: BorderSide(color: Colors.blueGrey.withOpacity(0.5), width: 2.0),
+            side: BorderSide(color: colorFondo, width: 2.0),
           ),
           child: Padding(
             padding: const EdgeInsets.all(15),

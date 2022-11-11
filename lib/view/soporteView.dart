@@ -1,7 +1,8 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
+import 'package:gore_app/view/prueba.dart';
 import 'package:gore_app/view/widgets/boton_soporte.dart';
 
 class SoporteView extends StatefulWidget {
@@ -35,11 +36,25 @@ class _SoporteViewState extends State<SoporteView> {
               padding: const EdgeInsets.only(top: 15),
               child: ListView(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   botonSoporte(context, "Sub gerencia de tecnologías de la información", "992023978", "", Icons.whatsapp, Icons.phone),
                   //botonSoporte(context, "Subgerencia de Presupuesto", "", "", Icons.whatsapp, Icons.phone),
                   //botonSoporte(context, "Gerencia regional de Infraestructura", "", "", Icons.whatsapp, Icons.phone),
-
+                  Center(
+                    child: prueba(),
+                  ),Center(
+                    child: prueba(),
+                  ),
+                  Center(
+                    child: prueba(),
+                  ),
+                  Center(
+                    child: prueba(),
+                  ),
+                  Center(
+                    child: prueba(),
+                  ),
                 ],
               ),
             ),

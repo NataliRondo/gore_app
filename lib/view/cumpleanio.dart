@@ -17,9 +17,12 @@ class _CumpleState extends State<Cumple> {
     ResponsiveApp responsiveApp = ResponsiveApp(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Padding(
+        title: const Center(
+            child: Padding(
           padding: EdgeInsets.only(right: 30),
-          child: Text("Cumpleaños",),
+          child: Text(
+            "Cumpleaños",
+          ),
         )),
         backgroundColor: colorFondo,
         leading: IconButton(
@@ -125,9 +128,11 @@ class _CumpleState extends State<Cumple> {
                       ),
                     ],
                   ),
+                  
                 ],
               ),
             ),
+            
           ],
         ),
       ),
