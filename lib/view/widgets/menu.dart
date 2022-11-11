@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/view/asistenciaView.dart';
-import 'package:gore_app/view/cumple.dart';
+import 'package:gore_app/view/cumpleanio.dart';
 import 'package:gore_app/view/notificaciones.dart';
-import 'package:gore_app/view/prueba.dart';
 import 'package:gore_app/view/soporteView.dart';
 
 Widget menuDrawer(BuildContext context, Usuario usuario) {
@@ -68,22 +67,23 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
               MaterialPageRoute(builder: ((context) => const SoporteView())));
         },
       ),
-      ListTile(
+
+     /** ListTile(
         leading: Icon(
           Icons.arrow_back,
           color: Tema,
         ),
         title: const Text("Cerrar sesión"),
         onTap: () {
-          /**
+          
            * if (Platform.isAndroid) {
             SystemNavigator.pop();
           } else if (Platform.isIOS) {
             exit(0);
           }
-           */
+           
         },
-      ),
+      ),*/
     ],
   ));
 }

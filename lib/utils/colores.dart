@@ -17,3 +17,4 @@ Color Tema = HexColor("#162129");
 Color Whatsapp = HexColor("#48c757");
 Color colorFondo = HexColor("#004a80");
 Color nuevo = Colors.indigo;
+Color front = HexColor("#34495E");

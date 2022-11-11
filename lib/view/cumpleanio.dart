@@ -19,7 +19,7 @@ class _CumpleState extends State<Cumple> {
       appBar: AppBar(
         title: const Center(child: Padding(
           padding: EdgeInsets.only(right: 30),
-          child: Text("Cumpleaños de día",),
+          child: Text("Cumpleaños",),
         )),
         backgroundColor: colorFondo,
         leading: IconButton(
@@ -53,16 +53,14 @@ class _CumpleState extends State<Cumple> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 5,
                         ),
                         children: [
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "SubG. Sistemas"),
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "SubG. Sistemas"),
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "SubG. Sistemas"),
                         ],
                       ),
                     ],
@@ -83,14 +81,14 @@ class _CumpleState extends State<Cumple> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 15,
+                          //crossAxisSpacing: 5,
+                          //mainAxisSpacing: 5,
                         ),
                         children: [
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "SubG. Caminos"),
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "SubG. Caminos"),
                         ],
                       ),
                     ],
@@ -111,20 +109,18 @@ class _CumpleState extends State<Cumple> {
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          crossAxisSpacing: 5,
-                          mainAxisSpacing: 15,
                         ),
                         children: [
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "SubG. Minas"),
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "Recursos Humanos"),
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "SubG. Caminos"),
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "Recursos Humanos"),
                           tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple),
+                              fontStyleNotificaciones, "SubG. Caminos"),
                         ],
                       ),
                     ],
