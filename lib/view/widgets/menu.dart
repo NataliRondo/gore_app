@@ -1,4 +1,5 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, unnecessary_null_comparison
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
@@ -23,7 +24,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
           Navigator.of(context).pop();
           Navigator.push(
               context,
-              MaterialPageRoute(
+              CupertinoPageRoute(
                   builder: ((context) => AsistenciaView(
                         usuario: usuario,
                       ))));
@@ -38,7 +39,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
         onTap: () {
           Navigator.of(context).pop();
           Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => const Cumple())));
+              CupertinoPageRoute(builder: ((context) => const Cumple())));
         },
       ),
       ListTile(
@@ -51,7 +52,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
           Navigator.of(context).pop();
           Navigator.push(
               context,
-              MaterialPageRoute(
+              CupertinoPageRoute(
                   builder: ((context) => const Notificaciones())));
         },
       ),
@@ -64,7 +65,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
         onTap: () {
           Navigator.of(context).pop();
           Navigator.push(context,
-              MaterialPageRoute(builder: ((context) => const SoporteView())));
+              CupertinoPageRoute(builder: ((context) => const SoporteView())));
         },
       ),
 
