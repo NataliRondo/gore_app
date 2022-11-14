@@ -57,7 +57,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
     super.initState();
 
     final newVersion = NewVersion(
-      androidId: 'org.telegram.messenger',
+      androidId: 'com.snapchat.android',
     );
 
     Timer(const Duration(milliseconds: 800), () {
