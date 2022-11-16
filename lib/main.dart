@@ -63,11 +63,11 @@ class _MyAppState extends State<MyApp> {
                 ));
       } else {
         return await Future<Widget>.delayed(
-            const Duration(seconds: 3), () => const AfterSplash());
+            const Duration(seconds: 4), () => const AfterSplash());
       }
     } else {
       return await Future<Widget>.delayed(
-          const Duration(seconds: 3), () => const AfterSplash());
+          const Duration(seconds: 4), () => const AfterSplash());
     }
   }
 

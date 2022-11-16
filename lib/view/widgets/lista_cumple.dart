@@ -15,7 +15,7 @@ tarjetaCumple(
       padding: const EdgeInsets.all(10),
       child: FlipCard(
         front: Card(
-          color: colorFondo,
+          color: Colors.white,
           elevation: 3,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
@@ -58,7 +58,7 @@ tarjetaCumple(
           ),
         ),
         back: Card(
-          color: AzulApp.withOpacity(0.3),
+          color: colorFondo,
           elevation: 3,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
