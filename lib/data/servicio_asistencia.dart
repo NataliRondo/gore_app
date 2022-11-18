@@ -19,7 +19,6 @@ class ServicioAsistencia{
       if (body["Estado"] == "Success") {
         for(var item in data){
           Asistencias asistencia = Asistencias(
-           /// DateTime.parse(json["Fecha"]);
             nombreDia: item["NombreDia"],
             fecha: DateTime.parse(item["Fecha"]),
             hora: item["Hora"]
