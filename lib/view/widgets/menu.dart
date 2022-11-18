@@ -39,7 +39,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
         onTap: () {
           Navigator.of(context).pop();
           Navigator.push(context,
-              CupertinoPageRoute(builder: ((context) => const Cumple())));
+              CupertinoPageRoute(builder: ((context) =>  Cumple(usuario: usuario,))));
         },
       ),
       ListTile(

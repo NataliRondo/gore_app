@@ -23,7 +23,7 @@ TextStyle fontStyleDependencia = const TextStyle(
     color: Colors.black);
 TextStyle fontStyleCumple = const TextStyle(
     fontFamily: 'Lato',
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: FontWeight.bold,
     color: Colors.black);
 TextStyle fontStyleNotificaciones = const TextStyle(

@@ -1,20 +1,17 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
-import 'package:gore_app/utils/responsive.dart';
-import 'package:gore_app/utils/variables.dart';
-import 'package:gore_app/view/widgets/lista_cumple.dart';
+import 'package:gore_app/view/widgets/cuempleanio.dart';
 
-class Cumple extends StatefulWidget {
-  const Cumple({Key? key}) : super(key: key);
+class Cumple extends StatelessWidget {
+  Usuario? usuario;
+   Cumple({Key? key, this.usuario}) : super(key: key);
 
-  @override
-  State<Cumple> createState() => _CumpleState();
-}
-
-class _CumpleState extends State<Cumple> {
   @override
   Widget build(BuildContext context) {
-    ResponsiveApp responsiveApp = ResponsiveApp(context);
+    //ResponsiveApp responsiveApp = ResponsiveApp(context);
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -34,108 +31,7 @@ class _CumpleState extends State<Cumple> {
           },
         ),
       ),
-      body: SingleChildScrollView(
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: responsiveApp.dp(76), top: 15),
-                        child: const Text(
-                          "Hoy",
-                          textAlign: TextAlign.right,
-                        ),
-                      ),
-                      GridView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        children: [
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "SubG. Sistemas"),
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "SubG. Sistemas"),
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "SubG. Sistemas"),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: responsiveApp.dp(76), top: 5),
-                        child: const Text(
-                          "Mañana",
-                          textAlign: TextAlign.right,
-                        ),
-                      ),
-                      GridView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          //crossAxisSpacing: 5,
-                          //mainAxisSpacing: 5,
-                        ),
-                        children: [
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "SubG. Caminos"),
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "SubG. Caminos"),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            right: responsiveApp.dp(76), top: 5),
-                        child: const Text(
-                          "Ayer",
-                          textAlign: TextAlign.right,
-                        ),
-                      ),
-                      GridView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
-                        children: [
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "SubG. Minas"),
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "Recursos Humanos"),
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "SubG. Caminos"),
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "Recursos Humanos"),
-                          tarjetaCumple(context, "Jorge Manrique Flores",
-                              fontStyleCumple, "SubG. Caminos"),
-                        ],
-                      ),
-                    ],
-                  ),
-                  
-                ],
-              ),
-            ),
-            
-          ],
-        ),
-      ),
+      body: CumpleanioLista(usuario: usuario,),
     );
   }
 }
