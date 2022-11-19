@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/servicio_cumpleanio.dart';
-import 'package:gore_app/models/trabajador.dart';
+import 'package:gore_app/models/cumpleanios_dia.dart';
+import 'package:gore_app/models/cumpleanios_diaA.dart';
+import 'package:gore_app/models/cumpleanios_diaH.dart';
+import 'package:gore_app/models/cumpleanios_diaM.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
@@ -14,54 +17,151 @@ class CumpleanioLista extends StatelessWidget {
   CumpleanioLista({super.key, this.usuario});
 
   ServicioCumpleanio servicioCumpleanio = ServicioCumpleanio();
+  List<CumpleanioDia> cumpleanioHoy = [];
+  List<CumpleanioDia> cumpleanio = [];
 
   @override
   Widget build(BuildContext context) {
     ResponsiveApp responsiveApp = ResponsiveApp(context);
     String token = usuario!.token!;
-    return FutureBuilder(
-      future: servicioCumpleanio.getCumpleanio(token),
-      builder: (context, AsyncSnapshot<List<Trabajador>> snapshot) {
-        if (snapshot.hasData) {
-          List<Trabajador> trabajadorLista = snapshot.data!;
-          //trabajadorLista.
-          return ListView(
-            children: [
-              Column(
-                children: [
-                  Padding(
-                    padding:
-                        EdgeInsets.only(right: responsiveApp.dp(76), top: 10),
-                    child: const Text(
-                      "Hoy",
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                  GridView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    children: trabajadorLista
-                        .map((Trabajador trabajador) => tarjetaCumple(
-                              context,
-                              "${trabajador.vPerNombre!} ${trabajador.vPerApellidoP!} ${trabajador.vPerApellidoM!}",
-                              fontStyleCumple,
-                              trabajador.foto.toString(),
-                              "",
-                            ))
-                        .toList(),
-                  ),
-                ],
+    return ListView(
+      children: [
+        Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: responsiveApp.dp(76), top: 10),
+              child: const Text(
+                "Hoy",
+                textAlign: TextAlign.right,
               ),
-            ],
-          );
-        } else {
-          return Container();
-        }
-      },
+            ),
+            FutureBuilder(
+              future: servicioCumpleanio.getCumpleanioDiaHoy(
+                token,
+              ),
+              builder: (context, AsyncSnapshot<List<CumpleanioDiaH>> snapshot) {
+                if (snapshot.hasData) {
+                  List<CumpleanioDiaH> cumpleanioLista = snapshot.data!;
+                  return Column(
+                    children: [
+                      GridView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        children: cumpleanioLista
+                            .map(
+                                (CumpleanioDiaH cumpleanioDia) => tarjetaCumple(
+                                      context,
+                                      "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
+                                      fontStyleCumple,
+                                      cumpleanioDia.foto.toString(),
+                                      "",
+                                    ))
+                            .toList(),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: responsiveApp.dp(76), top: 10),
+              child: const Text(
+                "Mañana",
+                textAlign: TextAlign.right,
+              ),
+            ),
+            FutureBuilder(
+              future: servicioCumpleanio.getCumpleanioDiaManana(
+                token,
+              ),
+              builder: (context, AsyncSnapshot<List<CumpleanioDiaM>> snapshot) {
+                if (snapshot.hasData) {
+                  List<CumpleanioDiaM> cumpleanioLista = snapshot.data!;
+                  return Column(
+                    children: [
+                      GridView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        children: cumpleanioLista
+                            .map(
+                                (CumpleanioDiaM cumpleanioDia) => tarjetaCumple(
+                                      context,
+                                      "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
+                                      fontStyleCumple,
+                                      cumpleanioDia.foto.toString(),
+                                      "",
+                                    ))
+                            .toList(),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(right: responsiveApp.dp(76), top: 10),
+              child: const Text(
+                "Ayer",
+                textAlign: TextAlign.right,
+              ),
+            ),
+            FutureBuilder(
+              future: servicioCumpleanio.getCumpleanioDiaAyer(
+                token,
+              ),
+              builder: (context, AsyncSnapshot<List<CumpleanioDiaA>> snapshot) {
+                if (snapshot.hasData) {
+                  List<CumpleanioDiaA> cumpleanioLista = snapshot.data!;
+                  return Column(
+                    children: [
+                      GridView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        children: cumpleanioLista
+                            .map(
+                                (CumpleanioDiaA cumpleanioDia) => tarjetaCumple(
+                                      context,
+                                      "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
+                                      fontStyleCumple,
+                                      cumpleanioDia.foto.toString(),
+                                      "",
+                                    ))
+                            .toList(),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
