@@ -114,10 +114,10 @@ Widget tarjetaCumple(
                         ),
                         SizedBox(
                           width: responsiveApp.wp(30),
-                          child: Center(
+                          child: const Center(
                             child: Text("",
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontFamily: 'Lato',
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,

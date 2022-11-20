@@ -30,7 +30,8 @@ TextStyle fontStyleNotificaciones = const TextStyle(
     fontFamily: 'Lato',
     fontSize: 12,
     fontWeight: FontWeight.bold,
-    color: Colors.white);
+    
+    color: Colors.black);
 TextStyle fontStyleSoporte = const TextStyle(
     fontFamily: 'Lato',
     fontSize: 14,

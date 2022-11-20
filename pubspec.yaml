@@ -50,6 +50,7 @@ dependencies:
   #new_version: ^0.3.0
   flip_card: ^0.6.0
   new_version: ^0.3.1
+  flutter_html: ^2.1.4
   
 dev_dependencies:
   flutter_test:

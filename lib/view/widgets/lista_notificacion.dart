@@ -3,13 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
+import 'package:gore_app/utils/variables.dart';
 
-notificacion(BuildContext context, String imagen, String titulo, TextStyle textStyle,
-    String subtitulo) {
+notificacion(BuildContext context, String imagen, String titulo,
+    TextStyle textStyle, String subtitulo) {
   ResponsiveApp responsiveApp = ResponsiveApp(context);
   return Center(
     child: Card(
-      //elevation: 1,
+      //color: Colors.blueGrey.withOpacity(0.1),
+      elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
         side: BorderSide(color: Colors.blueGrey.withOpacity(0.3), width: 2.0),
@@ -28,29 +30,27 @@ notificacion(BuildContext context, String imagen, String titulo, TextStyle textS
                     width: 10,
                   ),
                   CircleAvatar(
-                    radius: responsiveApp.dp(10),
-                    backgroundColor: Colors.white,
+                    radius: responsiveApp.dp(7),
+                    backgroundColor: colorRandom,
                     child: CircleAvatar(
-                      radius: responsiveApp.dp(6),
+                      radius: responsiveApp.dp(10),
                       //backgroundImage: foto.image,
-                      backgroundImage:  AssetImage(imagen),
+                      backgroundImage: AssetImage(imagen),
                       backgroundColor: Colors.transparent,
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 10),
+                    padding: const EdgeInsets.only(right: 10),
                     child: Center(
                       child: SizedBox(
-                        width: responsiveApp.wp(60),
+                        width: responsiveApp.wp(65),
                         child: ListTile(
                           title: Text(
+                            textAlign: TextAlign.left,
                             titulo,
                             style: textStyle,
                           ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(subtitulo),
-                          ),
+                          //subtitle: Text("data"),
                         ),
                       ),
                     ),
@@ -63,70 +63,4 @@ notificacion(BuildContext context, String imagen, String titulo, TextStyle textS
       ),
     ),
   );
-}
-
-class Bar extends StatefulWidget {
-  const Bar({Key? key}) : super(key: key);
-
-  @override
-  State<Bar> createState() => _BarState();
-}
-
-class _BarState extends State<Bar> {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: colorFondo,
-          leading: IconButton(
-            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () async {
-              Navigator.pop(context);
-              FocusScope.of(context).requestFocus(FocusNode());
-            },
-          ),
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              TabBar(
-                tabs: [
-                  Tab(
-                    text: 'Incoming',
-                  ),
-                  Tab(
-                    text: 'Outgoing',
-                  ),
-                  Tab(
-                    text: 'Missed',
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            IncomingPage(),
-            OutgoingPage(),
-            MissedPage(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget OutgoingPage() {
-    return Container();
-  }
-
-  Widget IncomingPage() {
-    return Container();
-  }
-}
-
-Widget MissedPage() {
-  return Container();
 }

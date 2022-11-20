@@ -66,9 +66,6 @@ class ServicioAsistencia {
         }
         if (dia!.fecha == day) {
           //asistenciaWidget(asistencia!.nombreDia!, asistencia!.hora!, asistencia!.fecha!);
-          print(dia!.nombreDia!);
-          print(dia!.hora!);
-          print(dia!.fecha!);
         }
       }
     });

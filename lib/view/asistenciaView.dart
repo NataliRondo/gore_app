@@ -35,8 +35,6 @@ class _AsistenciaViewState extends State<AsistenciaView> {
 
   @override
   Widget build(BuildContext context) {
-    String dni = usuario.codUser;
-    String token = usuario.token;
     return Scaffold(
       appBar: AppBar(
         title: const Center(

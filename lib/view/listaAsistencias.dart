@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/servicio_asistencia.dart';
 import 'package:gore_app/models/asistencias.dart';
-import 'package:gore_app/models/dia.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/variables.dart';
 
