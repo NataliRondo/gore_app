@@ -12,18 +12,31 @@ import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/widgets/lista_cumple.dart';
 
 // ignore: must_be_immutable
-class CumpleanioLista extends StatelessWidget {
+class CumpleanioLista extends StatefulWidget {
   Usuario? usuario;
   CumpleanioLista({super.key, this.usuario});
 
+  @override
+  State<CumpleanioLista> createState() => _CumpleanioListaState();
+}
+
+class _CumpleanioListaState extends State<CumpleanioLista> {
+  @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
+
   ServicioCumpleanio servicioCumpleanio = ServicioCumpleanio();
+
   List<CumpleanioDia> cumpleanioHoy = [];
+
   List<CumpleanioDia> cumpleanio = [];
 
   @override
   Widget build(BuildContext context) {
     ResponsiveApp responsiveApp = ResponsiveApp(context);
-    String token = usuario!.token!;
+    String token = widget.usuario!.token!;
     return ListView(
       children: [
         Column(
@@ -65,7 +78,14 @@ class CumpleanioLista extends StatelessWidget {
                     ],
                   );
                 } else {
-                  return Container();
+                  return Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  );
                 }
               },
             ),
@@ -110,7 +130,14 @@ class CumpleanioLista extends StatelessWidget {
                     ],
                   );
                 } else {
-                  return Container();
+                  return Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  );
                 }
               },
             ),
@@ -155,7 +182,14 @@ class CumpleanioLista extends StatelessWidget {
                     ],
                   );
                 } else {
-                  return Container();
+                  return Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  );
                 }
               },
             ),

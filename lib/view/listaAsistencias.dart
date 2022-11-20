@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/servicio_asistencia.dart';
 import 'package:gore_app/models/asistencias.dart';
+import 'package:gore_app/models/dia.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/variables.dart';
 
@@ -19,6 +20,11 @@ class _ListaAsistenciasState extends State<ListaAsistencias> {
   Usuario? usuario;
   DateTime? day;
   _ListaAsistenciasState(this.usuario, this.day);
+  @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
 
   ServicioAsistencia servicioAsistencia = ServicioAsistencia();
 

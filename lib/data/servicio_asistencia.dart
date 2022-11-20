@@ -5,27 +5,24 @@ import 'package:gore_app/models/asistencias.dart';
 import 'package:gore_app/models/dia.dart';
 import 'package:http/http.dart' as http;
 
-class ServicioAsistencia{
-
-  Future <List<Asistencias>> getAsistencias(String dni, String token, DateTime day) async {
+class ServicioAsistencia {
+  Future<List<Asistencias>> getAsistencias(
+      String dni, String token, DateTime day) async {
     List<Asistencias> asistenciaLista = [];
     String url = "$BASE_URL/asistencia/ObtenerMarcaciones?dni=$dni";
 
-    await http.post(Uri.parse(url), headers: {
-      'Authorization': token
-    }).then((dynamic res) {
+    await http.post(Uri.parse(url), headers: {'Authorization': token}).then(
+        (dynamic res) {
       final Map<String, dynamic> body = jsonDecode(res.body);
       List<dynamic> data = body["Data"];
       if (body["Estado"] == "Success") {
-        for(var item in data){
+        for (var item in data) {
           Asistencias asistencia = Asistencias(
-            nombreDia: item["NombreDia"],
-            fecha: DateTime.parse(item["Fecha"]),
-            hora: item["Hora"]
-          );
+              nombreDia: item["NombreDia"],
+              fecha: DateTime.parse(item["Fecha"]),
+              hora: item["Hora"]);
           asistenciaLista.add(asistencia);
         }
-
       }
     });
     return asistenciaLista;
@@ -42,27 +39,32 @@ class ServicioAsistencia{
     }
   }*/
 
-  Future <Dia> getAsistenciaDia(String dni, String token, DateTime day) async {
+  Future<List<Dia>> getAsistenciaDia(
+      String dni, String token, DateTime day) async {
     List<Dia> diaLista = [];
     String url = "$BASE_URL/asistencia/ObtenerMarcaciones?dni=$dni";
     Dia? dia;
 
-    await http.post(Uri.parse(url), headers: {
-      'Authorization': token
-    }).then((dynamic res) {
+    await http.post(Uri.parse(url), headers: {'Authorization': token}).then(
+        (dynamic res) {
       final Map<String, dynamic> body = jsonDecode(res.body);
       List<dynamic> data = body["Data"];
       if (body["Estado"] == "Success") {
-        for(var item in data){
-          dia = Dia(
-           /// DateTime.parse(json["Fecha"]);
-            nombreDia: item["NombreDia"],
-            fecha: DateTime.parse(item["Fecha"]),
-            hora: item["Hora"]
-          );
-          diaLista.add(dia!);
+        for (var item in data) {
+          Asistencias asistencia = Asistencias(
+              nombreDia: item["NombreDia"],
+              fecha: DateTime.parse(item["Fecha"]),
+              hora: item["Hora"]);
+
+          if (asistencia.fecha == day) {
+            dia = Dia(
+                nombreDia: item["NombreDia"],
+                fecha: DateTime.parse(item["Fecha"]),
+                hora: item["Hora"]);
+            diaLista.add(dia!);
+          } else {}
         }
-        if( dia!.fecha == day){
+        if (dia!.fecha == day) {
           //asistenciaWidget(asistencia!.nombreDia!, asistencia!.hora!, asistencia!.fecha!);
           print(dia!.nombreDia!);
           print(dia!.hora!);
@@ -70,6 +72,6 @@ class ServicioAsistencia{
         }
       }
     });
-    return dia!;
+    return diaLista;
   }
 }
