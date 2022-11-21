@@ -10,7 +10,6 @@ import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/view/login/login_backend.dart';
 import 'package:gore_app/view/pantalla_principal.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
