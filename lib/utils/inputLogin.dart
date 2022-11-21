@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gore_app/utils/variables.dart';
 
 TextField inputLogin(TextEditingController controller, bool obscureText,
     String? text, String? pass, TextStyle style) {
   return TextField(
+    inputFormatters: formatters,
     controller: controller,
     onChanged: (val) => pass = val,
     obscureText: obscureText,

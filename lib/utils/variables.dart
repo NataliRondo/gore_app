@@ -43,10 +43,10 @@ String strFecha = DateFormat('yyyy-MM-dd').format(fechaActual);
 var formatters = [
   FilteringTextInputFormatter.deny('.'),
   FilteringTextInputFormatter.deny(','),
-  FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
+  //FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
   //FilteringTextInputFormatter.deny(RegExp(r'[a-zA-Z]')),
   FilteringTextInputFormatter.deny('/'),
-  //FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+  //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
 ];
 
 DateFormat dateFormat = DateFormat("yyyy-MM-dd");
