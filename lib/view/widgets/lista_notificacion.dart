@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
 

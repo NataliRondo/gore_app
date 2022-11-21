@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:gore_app/data/conexion.dart';
 import 'package:gore_app/models/asistencias.dart';
-import 'package:gore_app/models/dia.dart';
 import 'package:http/http.dart' as http;
 
 class ServicioAsistencia {
   Future<List<Asistencias>> getAsistencias(
-      String dni, String token, DateTime day) async {
+      String dni, String token,) async {
     List<Asistencias> asistenciaLista = [];
     String url = "$BASE_URL/asistencia/ObtenerMarcaciones?dni=$dni";
 
@@ -28,22 +27,11 @@ class ServicioAsistencia {
     return asistenciaLista;
   }
 
-  /*Future<List<Asistencias>> getByDay(String dni, String token, DateTime day) async{
-    try {
-      var nextDay = day.add(Duration(days: 1));
-      var snapshop = await getAsistencias(dni, token, day);
-      List<Asistencias> asistencias = [];
-      
-    } catch (e) {
-      
-    }
-  }*/
-
-  Future<List<Dia>> getAsistenciaDia(
-      String dni, String token, DateTime day) async {
-    List<Dia> diaLista = [];
-    String url = "$BASE_URL/asistencia/ObtenerMarcaciones?dni=$dni";
-    Dia? dia;
+  Future<List<Asistencias>> getAsistenciasDia(
+      String dni, String token, String day) async {
+        //print(day);
+    List<Asistencias> asistenciaLista = [];
+    String url = "$BASE_URL/asistencia/ObtenerMarcacion?dni=$dni&fecha=$day";
 
     await http.post(Uri.parse(url), headers: {'Authorization': token}).then(
         (dynamic res) {
@@ -55,20 +43,10 @@ class ServicioAsistencia {
               nombreDia: item["NombreDia"],
               fecha: DateTime.parse(item["Fecha"]),
               hora: item["Hora"]);
-
-          if (asistencia.fecha == day) {
-            dia = Dia(
-                nombreDia: item["NombreDia"],
-                fecha: DateTime.parse(item["Fecha"]),
-                hora: item["Hora"]);
-            diaLista.add(dia!);
-          } else {}
-        }
-        if (dia!.fecha == day) {
-          //asistenciaWidget(asistencia!.nombreDia!, asistencia!.hora!, asistencia!.fecha!);
+          asistenciaLista.add(asistencia);
         }
       }
     });
-    return diaLista;
+    return asistenciaLista;
   }
 }

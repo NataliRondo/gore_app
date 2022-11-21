@@ -21,11 +21,6 @@ class CumpleanioLista extends StatefulWidget {
 }
 
 class _CumpleanioListaState extends State<CumpleanioLista> {
-  @override
-  void initState() {
-    super.initState();
-    setState(() {});
-  }
 
   ServicioCumpleanio servicioCumpleanio = ServicioCumpleanio();
 

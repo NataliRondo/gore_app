@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -30,11 +29,10 @@ TextStyle fontStyleNotificaciones = const TextStyle(
     fontFamily: 'Lato',
     fontSize: 12,
     fontWeight: FontWeight.bold,
-    
     color: Colors.black);
 TextStyle fontStyleSoporte = const TextStyle(
     fontFamily: 'Lato',
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.black);
 //Color colorFondo = colorFromHex("#004a80");
@@ -52,5 +50,4 @@ var formatters = [
 ];
 
 DateFormat dateFormat = DateFormat("yyyy-MM-dd");
-var colorRandom =
-        Colors.primaries[Random().nextInt(Colors.primaries.length)];
+var colorRandom = Colors.primaries[Random().nextInt(Colors.primaries.length)];

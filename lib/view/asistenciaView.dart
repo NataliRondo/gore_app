@@ -1,36 +1,40 @@
 // ignore_for_file: file_names, missing_return, unused_element, avoid_print, unused_field, must_be_immutable, no_logic_in_create_state
-// @dart=2.9
+
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/servicio_asistencia.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
-import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/listaAsistencias.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class AsistenciaView extends StatefulWidget {
-  Usuario usuario;
-  AsistenciaView({Key key, this.usuario}) : super(key: key);
+  Usuario? usuario;
+  AsistenciaView({Key? key, this.usuario}) : super(key: key);
 
   @override
   State<AsistenciaView> createState() => _AsistenciaViewState(usuario);
 }
 
 class _AsistenciaViewState extends State<AsistenciaView> {
-  Usuario usuario;
+  Usuario? usuario;
   _AsistenciaViewState(this.usuario);
 
-  DateTime _focusedDay;
-  DateTime _selectedDay;
+  DateTime? _focusedDay;
+  DateTime? _selectedDay;
+  String? fecha;
 
   ServicioAsistencia servicioAsistencia = ServicioAsistencia();
 
   @override
   void initState() {
     super.initState();
-    _focusedDay = DateTime.now();
-    _selectedDay = DateTime.now();
+    setState(() {
+      _focusedDay = DateTime.now();
+      _selectedDay = DateTime.now();
+      //fecha;
+      //fecha = DateFormat('yyy-MM-dd').format(_selectedDay).replaceAll("-", "");
+    });
   }
 
   @override
@@ -41,7 +45,7 @@ class _AsistenciaViewState extends State<AsistenciaView> {
             child: Padding(
           padding: EdgeInsets.only(right: 30),
           child: Text(
-            "Asistencias",
+            "Mis Marcaciones",
           ),
         )),
         backgroundColor: colorFondo,
@@ -76,12 +80,14 @@ class _AsistenciaViewState extends State<AsistenciaView> {
                     setState(() {
                       _focusedDay = focusedDay;
                       _selectedDay = selectedDay;
+                      fecha = DateFormat('yyy-MM-dd')
+                          .format(_selectedDay!)
+                          .replaceAll("-", "");
                     });
-                    _selectedDay.day;
-                    print(dateFormat.format(_selectedDay));
+                    print(fecha);
                   },
                   //locale: "es_ES",
-                  focusedDay: _focusedDay,
+                  focusedDay: _focusedDay!,
                   firstDay: DateTime.utc(
                       DateTime.now().year, DateTime.now().month, 1),
                   lastDay: DateTime.now().add(const Duration(days: 30)),
@@ -90,7 +96,7 @@ class _AsistenciaViewState extends State<AsistenciaView> {
             ),
             ListaAsistencias(
               usuario: usuario,
-              day: _selectedDay,
+              day: fecha.toString(),
             )
           ],
         ),

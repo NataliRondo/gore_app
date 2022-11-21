@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
+import 'package:gore_app/utils/open_telefono.dart';
 import 'package:gore_app/utils/open_whatsaap.dart';
 import 'package:gore_app/utils/variables.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 Widget botonSoporte(BuildContext context, String? nombre, String? celular,
     String? mensaje, IconData whatsapp, IconData phone) {
@@ -37,12 +37,7 @@ Widget botonSoporte(BuildContext context, String? nombre, String? celular,
                       ),
                       IconButton(
                         onPressed: () async {
-                          final call = Uri.parse('tel:+51 $celular');
-                          if (await canLaunchUrl(call)) {
-                            launchUrl(call);
-                          } else {
-                            throw 'Could not launch $call';
-                          }
+                          await openTelefono(celular);
                         },
                         icon: Icon(
                           phone,
@@ -60,3 +55,5 @@ Widget botonSoporte(BuildContext context, String? nombre, String? celular,
     ),
   );
 }
+
+

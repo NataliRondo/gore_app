@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
-import 'package:gore_app/view/prueba.dart';
-import 'package:gore_app/view/widgets/boton_soporte.dart';
+import 'package:gore_app/view/widgets/soporte_widget.dart';
 
 class SoporteView extends StatefulWidget {
   const SoporteView({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class _SoporteViewState extends State<SoporteView> {
     return Scaffold(
       backgroundColor: FondoApp,
       appBar: AppBar(
-        title: const Text("Soporte Técnico"),
+        title: const Text("Soporte Técnico SGTI"),
         backgroundColor: colorFondo,
         leading: IconButton(
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
@@ -38,22 +37,22 @@ class _SoporteViewState extends State<SoporteView> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  botonSoporte(context, "Sub gerencia de tecnologías de la información", "992023978", "", Icons.whatsapp, Icons.phone),
+                  //botonSoporte(context, "Sub gerencia de tecnologías de la información", "992023978", "", Icons.whatsapp, Icons.phone),
                   //botonSoporte(context, "Subgerencia de Presupuesto", "", "", Icons.whatsapp, Icons.phone),
                   //botonSoporte(context, "Gerencia regional de Infraestructura", "", "", Icons.whatsapp, Icons.phone),
                   Center(
-                    child: prueba(),
-                  ),Center(
-                    child: prueba(),
+                    child: tarjetaSoporte(context)
+                  ),const Center(
+                    //child: prueba(),
                   ),
-                  Center(
-                    child: prueba(),
+                  const Center(
+                    //child: prueba(),
                   ),
-                  Center(
-                    child: prueba(),
+                  const Center(
+                    //child: prueba(),
                   ),
-                  Center(
-                    child: prueba(),
+                  const Center(
+                    //child: prueba(),
                   ),
                 ],
               ),

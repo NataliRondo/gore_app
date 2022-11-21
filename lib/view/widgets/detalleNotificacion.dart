@@ -5,6 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:gore_app/utils/colores.dart';
 
 detalleNotificacion(BuildContext context, String notificacion, String detalle,
+    // ignore: non_constant_identifier_names
     String fechaRegistro, String Registrado) {
   return Scaffold(
     appBar: AppBar(

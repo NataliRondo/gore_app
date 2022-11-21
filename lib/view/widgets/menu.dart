@@ -19,15 +19,17 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
           Icons.calendar_month,
           color: Tema,
         ),
-        title: const Text("Asistencias"),
+        title: const Text("Mis Marcaciones"),
         onTap: () {
           Navigator.of(context).pop();
           Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: ((context) => AsistenciaView(
-                        usuario: usuario,
-                      ))));
+            context,
+            CupertinoPageRoute(
+              builder: ((context) => AsistenciaView(
+                    usuario: usuario,
+                  )),
+            ),
+          );
         },
       ),
       ListTile(
@@ -38,8 +40,14 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
         title: const Text("Cumpleaños"),
         onTap: () {
           Navigator.of(context).pop();
-          Navigator.push(context,
-              CupertinoPageRoute(builder: ((context) =>  Cumple(usuario: usuario,))));
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: ((context) => Cumple(
+                    usuario: usuario,
+                  )),
+            ),
+          );
         },
       ),
       ListTile(
@@ -51,9 +59,13 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
         onTap: () {
           Navigator.of(context).pop();
           Navigator.push(
-              context,
-              CupertinoPageRoute(
-                  builder: ((context) => NotificacionesView(usuario: usuario,))));
+            context,
+            CupertinoPageRoute(
+              builder: ((context) => NotificacionesView(
+                    usuario: usuario,
+                  )),
+            ),
+          );
         },
       ),
       ListTile(
@@ -61,11 +73,15 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
           Icons.contacts,
           color: Tema,
         ),
-        title: const Text("Soporte Informático"),
+        title: const Text("Soporte Técnico SGTI"),
         onTap: () {
           Navigator.of(context).pop();
-          Navigator.push(context,
-              CupertinoPageRoute(builder: ((context) => const SoporteView())));
+          Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: ((context) => const SoporteView()),
+            ),
+          );
         },
       ),
     ],
