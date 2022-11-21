@@ -668,7 +668,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
     XFile file;
     final dbHelper = ConfiguracionBack.instance;
     int allRows = await dbHelper.queryRowCount();
-    file = await ImagePicker().pickImage(source: source);
+    file = await ImagePicker().pickImage(source: source, maxHeight: 1020, maxWidth: 1020);
     if (file != null) {
       setState(() {
         imagePath = file.path;
