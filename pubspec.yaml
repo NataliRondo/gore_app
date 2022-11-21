@@ -53,6 +53,7 @@ dependencies:
   flutter_html: ^2.1.4
   get_it: ^7.2.0
   flutter_email_sender: ^5.2.0
+  quickalert: ^1.0.0
   
 dev_dependencies:
   flutter_test:
