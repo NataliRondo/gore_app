@@ -243,8 +243,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                           child: GestureDetector(
                                             onTap: () {
                                               opciones(context);
-                                              //print(photofile);
-                                              //setState(() {});
                                             },
                                             child: const Icon(
                                               Icons.edit,
@@ -298,7 +296,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     QrImage(
-                                      //oUsuario.dni + "%Q" + strFecha + "%Q" + strHora,
                                       data: "$dni%Q$strFecha%Q$strHora",
                                       version: 2,
                                       size: responsiveApp.dp(50),
@@ -354,7 +351,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
             ),
           )
         : Scaffold(
-            //key: keyScaffold,
             body: Column(
               children: [
                 Expanded(
@@ -379,7 +375,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                     child: Text(
                                       //"Natali",
                                       oUsuario.cdesUser.toString(),
-                                      //oUsuario.persona.vPerApellidos,
                                       textAlign: TextAlign.right,
                                       style: fontStyle,
                                     ),
@@ -396,7 +391,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                   SizedBox(
                                     width: double.infinity,
                                     child: Text(
-                                      //"75900795",
                                       dni,
                                       textAlign: TextAlign.right,
                                       style: fontStyle,
@@ -445,8 +439,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                             child: GestureDetector(
                                               onTap: () {
                                                 opciones(context);
-                                                //setState(() {});
-                                                //print(photofile);
                                               },
                                               child: const Icon(
                                                 Icons.edit,
@@ -497,8 +489,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     opciones(context);
-                                                    //print(photofile);
-                                                    //setState(() {});
                                                   },
                                                   child: const Icon(
                                                     Icons.edit,
@@ -548,8 +538,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                                 child: GestureDetector(
                                                   onTap: () {
                                                     opciones(context);
-                                                    //print(photofile);
-                                                    //setState(() {});
                                                   },
                                                   child: const Icon(
                                                     Icons.edit,
@@ -566,7 +554,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
-                            //width: responsiveApp.wp(30),
                             child: SizedBox(
                               width: double.infinity,
                               child: Text(
@@ -604,7 +591,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     QrImage(
-                                      //oUsuario.dni + "%Q" + strFecha + "%Q" + strHora,
                                       data: "$dni%Q$strFecha%Q$strHora",
                                       version: 2,
                                       size: responsiveApp.dp(50),
@@ -673,17 +659,13 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
         imagen64 =
             "data:image/png;base64,${base64Encode(File(imagePath).readAsBytesSync())}";
         var x = "Imagen tomada-> $imagen64";
-        //var y = "Imagen de la base de datos -> ${usuarioLite.foto}";
         print(x);
-        //print(y);
-
         if (allRows == 0) {
           ConfiguracionUsuario configuracionUsuario =
               ConfiguracionUsuario(dni, imagen64);
           dbHelper.insert(configuracionUsuario);
           bytesConfiguracion =
               base64.decode(configuracionUsuario.foto.split(',').last);
-          //guardar(imagePath.toString());
         } else {
           if (allRows == 1) {
             ConfiguracionUsuario configuracionUsuario =
@@ -691,7 +673,6 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
             dbHelper.update(dni, configuracionUsuario);
             bytesConfiguracion =
                 base64.decode(configuracionUsuario.foto.split(',').last);
-            //Obtener el usuario
           }
         }
       });
