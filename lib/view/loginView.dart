@@ -9,6 +9,7 @@ import 'package:gore_app/utils/inputLogin.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/view/login/login_backend.dart';
 import 'package:gore_app/view/pantalla_principal.dart';
+import 'package:gore_app/view/widgets/password_widget.dart';
 import 'package:quickalert/quickalert.dart';
 
 class LoginView extends StatefulWidget {
@@ -29,6 +30,7 @@ class _LoginView extends State<LoginView> implements LoginContract {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String? username, password;
   late LoginBackend _presenter;
+  double _elementsOpacity = 1;
   final passHolder = TextEditingController();
   final uidHolder = TextEditingController();
 
@@ -105,7 +107,8 @@ class _LoginView extends State<LoginView> implements LoginContract {
                   const SizedBox(height: 45.0),
                   inputLogin(uidHolder, false, "Usuario", username, style),
                   const SizedBox(height: 25.0),
-                  inputLogin(passHolder, true, "Contraseña", password, style),
+                  PasswordField(passwordController: passHolder, fadePassword: _elementsOpacity == 0),
+                  //inputLogin(passHolder, true, "Contraseña", password, style),
                   const SizedBox(
                     height: 35.0,
                   ),

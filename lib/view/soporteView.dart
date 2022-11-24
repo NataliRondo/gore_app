@@ -37,23 +37,8 @@ class _SoporteViewState extends State<SoporteView> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  //botonSoporte(context, "Sub gerencia de tecnologías de la información", "992023978", "", Icons.whatsapp, Icons.phone),
-                  //botonSoporte(context, "Subgerencia de Presupuesto", "", "", Icons.whatsapp, Icons.phone),
-                  //botonSoporte(context, "Gerencia regional de Infraestructura", "", "", Icons.whatsapp, Icons.phone),
                   Center(
-                    child: tarjetaSoporte(context)
-                  ),const Center(
-                    //child: prueba(),
-                  ),
-                  const Center(
-                    //child: prueba(),
-                  ),
-                  const Center(
-                    //child: prueba(),
-                  ),
-                  const Center(
-                    //child: prueba(),
-                  ),
+                    child: tarjetaSoporte(context))
                 ],
               ),
             ),

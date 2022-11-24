@@ -32,8 +32,6 @@ class _AsistenciaViewState extends State<AsistenciaView> {
     setState(() {
       _focusedDay = DateTime.now();
       _selectedDay = DateTime.now();
-      //fecha;
-      //fecha = DateFormat('yyy-MM-dd').format(_selectedDay).replaceAll("-", "");
     });
   }
 
@@ -67,7 +65,6 @@ class _AsistenciaViewState extends State<AsistenciaView> {
                 color: const Color.fromARGB(255, 242, 249, 255),
                 elevation: 3,
                 child: TableCalendar(
-                  //locale: Localizations.localeOf(context).toString(),
                   locale: 'ES',
 
                   headerStyle: HeaderStyle(
@@ -86,7 +83,6 @@ class _AsistenciaViewState extends State<AsistenciaView> {
                     });
                     print(fecha);
                   },
-                  //locale: "es_ES",
                   focusedDay: _focusedDay!,
                   firstDay: DateTime.utc(
                       DateTime.now().year, DateTime.now().month, 1),
