@@ -87,7 +87,6 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
         Divider(
           color: Colors.black26,
           height: 15,
-          
         ),
         ListTile(
           leading: Icon(
@@ -99,12 +98,15 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
             Navigator.of(context).pop();
             final dbHelper = DatabaseHelper.instance;
             dbHelper.delete(usuario.codUser!);
-            Navigator.push(
+            /* Navigator.push(
               context,
               CupertinoPageRoute(
                 builder: ((context) => const LoginView()),
               ),
-            );
+            );*/
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => LoginView() //new
+                    ));
           },
         ),
       ],
