@@ -24,7 +24,7 @@ Widget tarjetaSoporte(BuildContext context) {
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  "Escribir su requerimiento al correo de la Sub Gerencia de Tecnologías de la información - GRLL, con el fin de derivar al personal especialista de la SGTI para su atención, daremos respuesta a su correo una vez atendido de acuerdo a orden de llegada.",
+                  "Escribir su requerimiento al correo de la Sub Gerencia de Tecnologías de la Información - GRLL, con el fin de derivar al personal especialista de la SGTI para su atención, daremos respuesta a su correo una vez atendido de acuerdo a orden de llegada.",
                   style: TextStyle(fontFamily: "Lato"),
                   textAlign: TextAlign.justify,
                 ),
