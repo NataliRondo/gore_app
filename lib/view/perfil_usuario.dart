@@ -16,6 +16,7 @@ import 'package:gore_app/view/widgets/updateDialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_version/new_version.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:quickalert/quickalert.dart';
 
 // ignore: must_be_immutable
 class PerfilUsuario extends StatefulWidget {
@@ -113,10 +114,10 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                 Container(
                   height: responsiveApp.hp(70),
                   color: colorFondo,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: ListView(
+                    //mainAxisSize: MainAxisSize.min,
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    //crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(
                         children: [
@@ -256,10 +257,11 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                           ),
                         ],
                       ),
+                      SizedBox(height:30,),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
-                          //width: responsiveApp.wp(30),
+                          width: responsiveApp.wp(30),
                           child: SizedBox(
                             width: double.infinity,
                             child: Text(
@@ -551,6 +553,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                             ),
                           ],
                         ),
+                        SizedBox(height:30,),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
@@ -678,6 +681,10 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
       });
     }
     setState(() {});
+    QuickAlert.show(
+        context: context,
+        type: QuickAlertType.success,
+        text: "Foto cambiada con éxito");
   }
 
   Uint8List obtenerFotoUsuario(Usuario oUsuario) {

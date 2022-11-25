@@ -3,10 +3,12 @@ import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/open_email.dart';
 import 'package:gore_app/utils/open_telefono.dart';
 import 'package:gore_app/utils/open_whatsaap.dart';
+import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
 import 'package:open_mail_app/open_mail_app.dart';
 
 Widget tarjetaSoporte(BuildContext context) {
+  ResponsiveApp responsiveApp = ResponsiveApp(context);
   return Center(
     child: Column(
       children: [
@@ -63,21 +65,21 @@ Widget tarjetaSoporte(BuildContext context) {
                   borderOnForeground: false,
                   //color: Tema.withOpacity(0.3),
                   child: SizedBox(
-                    height: 40,
-                    width: 300,
+                    height: responsiveApp.hp(12),
+                    width: responsiveApp.wp(80),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 10),
+                            padding:  EdgeInsets.only(left: responsiveApp.dp(5)),
                             child: Text(
                               "sgti@regionlalibertad.gob.pe",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 17,
+                                fontSize: responsiveApp.dp(4.3),
                                 //fontFamily: "Lato"
                               ),
                             ),
@@ -87,7 +89,7 @@ Widget tarjetaSoporte(BuildContext context) {
                           ),
                           Icon(
                             Icons.email_outlined,
-                            size: 23,
+                            size: responsiveApp.dp(7),
                             color: Colors.blue,
                           ),
                         ],
@@ -116,7 +118,7 @@ Widget tarjetaSoporte(BuildContext context) {
                     "Comunicarse a los siguientes anexos durante horario laboral:"),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 240),
+                padding:  EdgeInsets.only(right: responsiveApp.dp(50),),
                 child: Column(
                   children: const [
                     Text("Anexo 01: 120"),
@@ -138,15 +140,15 @@ Widget tarjetaSoporte(BuildContext context) {
                       padding: const EdgeInsets.only(left: 8, right: 8),
                       child: InkWell(
                         child: Container(
-                          height: 30,
-                          width: 30,
+                          height: responsiveApp.hp(8),
+                          width: responsiveApp.hp(8),
                           decoration: BoxDecoration(
                               color: colorFondo,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(15))),
                           child: Icon(
                             Icons.phone_outlined,
-                            size: 20,
+                            size: responsiveApp.hp(5.5),
                             color: Colors.white,
                           ),
                         ),
@@ -168,11 +170,11 @@ Widget tarjetaSoporte(BuildContext context) {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    InkWell(
                       onTap: () {
                         openwhatsapp(context, "973438858", "");
                       },
@@ -180,21 +182,21 @@ Widget tarjetaSoporte(BuildContext context) {
                         borderOnForeground: false,
                         color: Whatsapp.withOpacity(0.8),
                         child: SizedBox(
-                          height: 40,
-                          width: 150,
+                          height: responsiveApp.hp(10),
+                          width: responsiveApp.wp(40),
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 10),
+                                  padding:  EdgeInsets.only(left: responsiveApp.dp(5)),
                                   child: Text(
                                     "WhatsApp",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 17,
+                                      fontSize: responsiveApp.dp(4.5),
                                       //fontFamily: "Lato"
                                     ),
                                   ),
@@ -204,7 +206,7 @@ Widget tarjetaSoporte(BuildContext context) {
                                 ),
                                 Icon(
                                   Icons.whatsapp,
-                                  size: 23,
+                                  size: responsiveApp.dp(5.5),
                                   color: Colors.white,
                                 ),
                               ],
@@ -213,10 +215,7 @@ Widget tarjetaSoporte(BuildContext context) {
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
+                    InkWell(
                       onTap: () {
                         openTelefono("+51973438858");
                       },
@@ -224,21 +223,21 @@ Widget tarjetaSoporte(BuildContext context) {
                         borderOnForeground: false,
                         color: colorFondo,
                         child: SizedBox(
-                          height: 40,
-                          width: 150,
+                          height: responsiveApp.hp(10),
+                          width: responsiveApp.wp(40),
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 25),
+                                  padding: EdgeInsets.only(left: responsiveApp.dp(5),),
                                   child: Text(
                                     "Teléfono",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 17,
+                                      fontSize: responsiveApp.dp(4.5),
                                       //fontFamily: "Lato"
                                     ),
                                   ),
@@ -248,7 +247,7 @@ Widget tarjetaSoporte(BuildContext context) {
                                 ),
                                 Icon(
                                   Icons.phone_outlined,
-                                  size: 20,
+                                  size: responsiveApp.dp(5.5),
                                   color: Colors.white,
                                 ),
                               ],
@@ -257,8 +256,8 @@ Widget tarjetaSoporte(BuildContext context) {
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 openwhatsapp(
@@ -26,10 +27,16 @@ openwhatsapp(
     if (await canLaunch(whatsappURlAndroid)) {
       await launch(whatsappURlAndroid);
     } else {
-      _showMyDialog(context);
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        text: "Instale Whatsapp o verifique que no tenga activado dual app (Whatsapp)");
     }
   }
+  
 }
+
+
 Future _showMyDialog(
   BuildContext context,
 ) async {
