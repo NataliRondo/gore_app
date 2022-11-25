@@ -73,7 +73,6 @@ class _PantallaInicioState extends State<PantallaInicio> {
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           icon: const Icon(Icons.menu),
           onPressed: () async {
-            //setState(() {});
             keyScaffold.currentState!.openDrawer();
             obtenerDatos();
           },
@@ -92,7 +91,6 @@ class _PantallaInicioState extends State<PantallaInicio> {
                 child: Column(
                   children: [
                     SizedBox(
-                        //padding: EdgeInsets.only(right: responsiveApp.dp(10)),
                         width: responsiveApp.wp(30),
                         height: responsiveApp.wp(30),
                         child: fotoGuardada != null
@@ -130,7 +128,6 @@ class _PantallaInicioState extends State<PantallaInicio> {
                           child: Center(
                             child: Text(
                               oUsuario!.cdesUser!,
-                              //oUsuario.persona.vPerApellidos,
                               textAlign: TextAlign.right,
                               style: fontStyle,
                             ),
@@ -142,7 +139,10 @@ class _PantallaInicioState extends State<PantallaInicio> {
                 ),
               ),
             ),
-            menuDrawer(context, oUsuario!)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: menuDrawer(context, oUsuario!),
+            )
           ],
         ),
       ),
@@ -150,7 +150,6 @@ class _PantallaInicioState extends State<PantallaInicio> {
         onTap: () {
           FocusScope.of(context).unfocus();
           obtenerDatos();
-          //setState(() {});
         },
         child: PerfilUsuario(
           oUsuario: oUsuario,

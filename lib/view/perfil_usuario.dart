@@ -357,10 +357,10 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                   child: Container(
                     height: responsiveApp.hp(70),
                     color: colorFondo,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                    child: ListView(
+                      //mainAxisSize: MainAxisSize.min,
+                      //mainAxisAlignment: MainAxisAlignment.center,
+                      //crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
                           children: [

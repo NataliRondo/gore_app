@@ -90,12 +90,6 @@ class DatabaseHelper {
     return null;
   }
 
-  /* Future<int> update(UsuarioLite usuarioLite, String foto) async {
-    Database? db = await instance.database;
-    return await db!.update(table, usuarioLite.toMapForDb(),
-        where: 'foto = ?', whereArgs: [usuarioLite.foto]);
-  }*/
-
   Future<int> update(String id, String foto) async {
     Database? db = await instance.database;
     return await db!
