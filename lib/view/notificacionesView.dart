@@ -83,7 +83,10 @@ class _NotificacionesViewState extends State<NotificacionesView> {
                 ),
               );
             } else {
-              return Container();
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: Center(child: CircularProgressIndicator()),
+              );
             }
           },
         ));
