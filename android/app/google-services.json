@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "478641443145",
+    "project_id": "grll---oficina-digital",
+    "storage_bucket": "grll---oficina-digital.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478641443145:android:257c14d0a815298f3c0a98",
+        "android_client_info": {
+          "package_name": "com.example.gore_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478641443145-q5upqgs7188pbpl7bmk8eoshkgp56916.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnp82XILroVCAA3ygFY9j_sjRACMpXUMY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478641443145-q5upqgs7188pbpl7bmk8eoshkgp56916.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
