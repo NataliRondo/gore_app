@@ -9,9 +9,10 @@ import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/configuracion.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/routes.dart';
+import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/loginView.dart';
 import 'package:gore_app/view/pantalla_principal.dart';
-import 'package:gore_app/view/prueba.dart';
+import 'package:gore_app/view/push_notificacion.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -43,7 +44,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     initPlataformState();
   }
-  static const String oneSignalID = "d597d539-8967-43ab-85ee-4307b60bef58";
+  
   Future<void> initPlataformState() async {
     OneSignal.shared.setAppId(oneSignalID);
     OneSignal.shared
@@ -64,7 +65,7 @@ class _MyAppState extends State<MyApp> {
 
         //notificacion.
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => Prueba(
+          builder: (context) => PushNotificacion(
             notificacion: notificacion,
             noti: noti,
           ),

@@ -7,6 +7,7 @@ import 'package:gore_app/utils/colores.dart';
 detalleNotificacion(BuildContext context, String notificacion, String detalle,
     // ignore: non_constant_identifier_names
     String fechaRegistro, String Registrado) {
+      print(detalle);
   return Scaffold(
     appBar: AppBar(
       title: Text(
@@ -19,7 +20,6 @@ detalleNotificacion(BuildContext context, String notificacion, String detalle,
         icon: const Icon(Icons.arrow_back),
         onPressed: () async {
           Navigator.pop(context);
-          //FocusScope.of(context).requestFocus(FocusNode());
         },
       ),
     ),

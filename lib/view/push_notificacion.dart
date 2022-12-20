@@ -4,23 +4,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gore_app/push/not.dart';
+import 'package:gore_app/view/widgets/notificacion_push.dart';
 
-class Prueba extends StatefulWidget {
+class PushNotificacion extends StatefulWidget {
   Map<String, dynamic>? notificacion;
   String? noti;
-  Prueba({Key? key, this.notificacion, this.noti,})
-      : super(key: key);
+  PushNotificacion({
+    Key? key,
+    this.notificacion,
+    this.noti,
+  }) : super(key: key);
 
   @override
-  State<Prueba> createState() =>
-      _PruebaState(notificacion, noti);
+  State<PushNotificacion> createState() => _PushNotificacionState(notificacion, noti);
 }
 
-class _PruebaState extends State<Prueba> {
+class _PushNotificacionState extends State<PushNotificacion> {
   Map<String, dynamic>? notificacion;
   String? noti;
   Not notificacionNot = Not();
-  _PruebaState(this.notificacion, this.noti);
+  _PushNotificacionState(this.notificacion, this.noti);
   @override
   Widget build(BuildContext context) {
     notificacion!.remove("custom");
@@ -29,20 +32,17 @@ class _PruebaState extends State<Prueba> {
     print(encode);
     Map<String, dynamic> deco = jsonDecode(encode);
     print(deco);
-    notificacionNot= Not.fromJson(deco);
+    notificacionNot = Not.fromJson(deco);
     print(notificacionNot);
     var encodeNot = jsonEncode(notificacionNot);
     print(encodeNot);
     print(notificacionNot.alert);
-    
+
     return Scaffold(
       body: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [Center(child: Text(noti!))],
-        ),
-      )),
+        child: detallePush(context, notificacionNot.title!,
+            notificacionNot.bicon!, notificacionNot.googleSentTime!, "GRLL"),
+      ),
     );
   }
 }

@@ -9,7 +9,6 @@ import 'package:gore_app/data/conexion.dart';
 import 'package:intl/intl.dart';
 
 class ServicioCumpleanio {
-  
   Future<List<CumpleanioDiaH>> getCumpleanioDiaHoy(String token) async {
     List<CumpleanioDiaH> cumpleanioLista = [];
     CumpleanioDiaH cumpleanioDiaH = CumpleanioDiaH();

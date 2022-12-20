@@ -51,3 +51,4 @@ var formatters = [
 
 DateFormat dateFormat = DateFormat("yyyy-MM-dd");
 var colorRandom = Colors.primaries[Random().nextInt(Colors.primaries.length)];
+const String oneSignalID = "d597d539-8967-43ab-85ee-4307b60bef58";
