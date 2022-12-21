@@ -56,20 +56,16 @@ class _MyAppState extends State<MyApp> {
             result.notification.jsonRepresentation().replaceAll("\\n", "\n");
         var notificacion = result.notification.rawPayload;
         
-        print(result.notification.title);
-        print(result.notification.body);
-        print(result.notification.subtitle);
-        print(result.notification.groupMessage);
 
         print("Opened notification: \n$notificacion");
 
         //notificacion.
-        Navigator.of(context).push(MaterialPageRoute(
+       /*Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => PushNotificacion(
             notificacion: notificacion,
             noti: noti,
           ),
-        ));
+        ));*/
       });
     });
     

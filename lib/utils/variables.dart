@@ -38,7 +38,7 @@ TextStyle fontStyleSoporte = const TextStyle(
 //Color colorFondo = colorFromHex("#004a80");
 DateTime fechaActual = DateTime.now();
 String strHora = DateFormat('kk:mm:ss').format(fechaActual);
-String strFecha = DateFormat('yyyy-MM-dd').format(fechaActual);
+String strFecha = DateFormat('dd-MM-yyyy').format(fechaActual);
 
 var formatters = [
   FilteringTextInputFormatter.deny('.'),
@@ -49,6 +49,6 @@ var formatters = [
   //FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
 ];
 
-DateFormat dateFormat = DateFormat("yyyy-MM-dd");
+DateFormat dateFormat = DateFormat("dd-MM-yyyy");
 var colorRandom = Colors.primaries[Random().nextInt(Colors.primaries.length)];
 const String oneSignalID = "d597d539-8967-43ab-85ee-4307b60bef58";
