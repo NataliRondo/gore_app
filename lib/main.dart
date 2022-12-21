@@ -12,7 +12,6 @@ import 'package:gore_app/routes.dart';
 import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/loginView.dart';
 import 'package:gore_app/view/pantalla_principal.dart';
-import 'package:gore_app/view/push_notificacion.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:splashscreen/splashscreen.dart';

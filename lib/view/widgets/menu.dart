@@ -5,8 +5,10 @@ import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/view/asistenciaView.dart';
+import 'package:gore_app/view/biometria.dart';
 import 'package:gore_app/view/cumpleanio.dart';
 import 'package:gore_app/view/loginView.dart';
+import 'package:gore_app/view/login_screen.dart';
 import 'package:gore_app/view/notificacionesView.dart';
 import 'package:gore_app/view/soporteView.dart';
 
@@ -80,6 +82,22 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
               context,
               CupertinoPageRoute(
                 builder: ((context) => const SoporteView()),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.fingerprint,
+            color: Tema,
+          ),
+          title: const Text("Biometría"),
+          onTap: () {
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: ((context) => const BiometriaView()),
               ),
             );
           },
