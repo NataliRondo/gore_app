@@ -24,7 +24,7 @@ class AuthService {
     if (isBiometricSupported) {
       try {
         isAuthenticated = await localAuthentication.authenticate(
-            localizedReason: 'To continue, you must complete the biometrics',
+            localizedReason: 'Continua para completar el registro',
            // biometricOnly: true,
             //useErrorDialogs: true,
             //stickyAuth: true

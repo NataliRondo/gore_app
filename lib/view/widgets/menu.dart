@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
+import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/view/asistenciaView.dart';
@@ -12,7 +13,7 @@ import 'package:gore_app/view/login_screen.dart';
 import 'package:gore_app/view/notificacionesView.dart';
 import 'package:gore_app/view/soporteView.dart';
 
-Widget menuDrawer(BuildContext context, Usuario usuario) {
+Widget menuDrawer(BuildContext context, Usuario usuario, UsuarioLite usuarioLite) {
   return SingleChildScrollView(
     child: Column(
       children: [
@@ -97,7 +98,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario) {
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: ((context) => const BiometriaView()),
+                builder: ((context) =>  LoginPage(usuarioLite: usuarioLite,)),
               ),
             );
           },

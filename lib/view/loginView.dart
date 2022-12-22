@@ -116,6 +116,7 @@ class _LoginView extends State<LoginView> implements LoginContract {
                   const SizedBox(
                     height: 15.0,
                   ),
+                  
                 ],
               ),
             ),

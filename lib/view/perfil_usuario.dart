@@ -257,7 +257,9 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                           ),
                         ],
                       ),
-                      SizedBox(height:30,),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SizedBox(
@@ -411,7 +413,8 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                           height: 150,
                                           decoration: BoxDecoration(
                                             border: Border.all(
-                                                width: 4, color: Colors.white10),
+                                                width: 4,
+                                                color: Colors.white10),
                                             boxShadow: [
                                               BoxShadow(
                                                   spreadRadius: 2,
@@ -520,7 +523,8 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
                                                   fit: BoxFit.cover,
-                                                  image: MemoryImage(bytesUsuario,
+                                                  image: MemoryImage(
+                                                      bytesUsuario,
                                                       scale: 0.3),
                                                 ),
                                               ),
@@ -553,7 +557,9 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
                             ),
                           ],
                         ),
-                        SizedBox(height:30,),
+                        SizedBox(
+                          height: 30,
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
@@ -655,7 +661,11 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
     XFile file;
     final dbHelper = ConfiguracionBack.instance;
     int allRows = await dbHelper.queryRowCount();
-    file = await ImagePicker().pickImage(source: source, maxHeight: 1020, maxWidth: 1020);
+    file = await ImagePicker().pickImage(
+      source: source,
+      maxHeight: 1920,
+      maxWidth: 1080,
+    );
     if (file != null) {
       setState(() {
         imagePath = file.path;

@@ -8,6 +8,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/view/secret_page.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -25,7 +26,7 @@ class BiometriaView extends StatelessWidget {
 
       try {
         return await auth.authenticate(
-          localizedReason: 'Scan Fingerprint To Enter Vault',
+          localizedReason: 'Escanear huella digital para registrarse',
           options: const AuthenticationOptions(
             useErrorDialogs: true,
             stickyAuth: true,
@@ -38,7 +39,16 @@ class BiometriaView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fingerprint Auth'),
+        title: const Text("Registro biométrico"),
+        backgroundColor: colorFondo,
+        leading: IconButton(
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () async {
+            Navigator.pop(context);
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+        ),
       ),
       body: Center(
         child: ElevatedButton(
@@ -58,7 +68,7 @@ class BiometriaView extends StatelessWidget {
               Container();
             }
           },
-          child: const Text('Click Here'),
+          child: const Text('Click aquí'),
         ),
       ),
     );

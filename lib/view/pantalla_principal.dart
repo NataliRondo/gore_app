@@ -141,7 +141,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: menuDrawer(context, oUsuario!),
+              child: menuDrawer(context, oUsuario!, usuarioLite!),
             )
           ],
         ),

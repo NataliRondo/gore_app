@@ -60,6 +60,8 @@ dependencies:
   firebase_core: ^2.3.0
   #biometria
   local_auth: ^2.1.2
+  #guardar preferencias
+  shared_preferences: ^2.0.15
   
 dev_dependencies:
   flutter_test:

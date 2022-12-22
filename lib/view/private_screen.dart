@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gore_app/utils/colores.dart';
 
 class PrivateScreen extends StatelessWidget {
   const PrivateScreen({Key? key}) : super(key: key);
@@ -7,7 +8,7 @@ class PrivateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-      appBar: AppBar(title: const Text('Private Page')),
+      appBar: AppBar(title: const Text('Registro completo'), backgroundColor: colorFondo,),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -18,7 +19,7 @@ class PrivateScreen extends StatelessWidget {
                   size: 100, color: Colors.blueGrey),
               const SizedBox(height: 20),
               const Text(
-                  'You now have access to this page. Tap on logout to go back.',
+                  'Se ha registrado con éxito',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 21,
@@ -33,7 +34,7 @@ class PrivateScreen extends StatelessWidget {
                   },
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.all(20),
-                    backgroundColor: Colors.blue,
+                    backgroundColor: colorFondo,
                     shadowColor: const Color(0xFF323247),
                   ),
                   child: Row(
