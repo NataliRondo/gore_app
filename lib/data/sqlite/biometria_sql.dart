@@ -77,7 +77,7 @@ class BiometriaSQL {
         await db!.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
-  Future<Biometriasql?> getUsuario() async {
+  Future<Biometriasql?> getUsuarioBio() async {
     Database? db = await instance.database;
     List<Map<String, dynamic>> maps = await db!.query(table);
     if (maps.isNotEmpty) {

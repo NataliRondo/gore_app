@@ -2,11 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
+import 'package:gore_app/data/sqlite/biometria_sql.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
+import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/view/asistenciaView.dart';
-import 'package:gore_app/view/biometria.dart';
 import 'package:gore_app/view/cumpleanio.dart';
 import 'package:gore_app/view/loginView.dart';
 import 'package:gore_app/view/login_screen.dart';
@@ -98,7 +99,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario, UsuarioLite usuarioLite
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: ((context) =>  LoginPage(usuarioLite: usuarioLite,)),
+                builder: ((context) =>  LoginPage()),
               ),
             );
           },
@@ -113,10 +114,13 @@ Widget menuDrawer(BuildContext context, Usuario usuario, UsuarioLite usuarioLite
             color: Tema,
           ),
           title: const Text("Cerrar Sesión"),
-          onTap: () {
+          onTap: () async {
             Navigator.of(context).pop();
             final dbHelper = DatabaseHelper.instance;
+            final dbHelperBio = BiometriaSQL.instance;
+            Biometriasql? biometriasql = await dbHelperBio.getUsuarioBio();
             dbHelper.delete(usuario.codUser!);
+            //dbHelperBio.delete(biometriasql!.dni!);
             /* Navigator.push(
               context,
               CupertinoPageRoute(

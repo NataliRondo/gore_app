@@ -5,8 +5,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gore_app/data/sqlite/biometria_sql.dart';
 import 'package:gore_app/data/sqlite/configuracion.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
+import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/models/configuracion.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
@@ -46,12 +48,16 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
   Uint8List bytesConfiguracion;
   String foto;
   String dni;
+  Biometriasql biometriasql;
 
   @override
   void initState() {
     setState(() {
       if (configuracionUsuario == null) {
         obtenerDatos();
+      }
+      if (biometriasql == null) {
+        obtenerDatosBio();
       }
     });
 
@@ -95,6 +101,18 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
       bytesConfiguracion =
           base64.decode(configuracionUsuario.foto.split(',').last);
       foto = configuracionUsuario.foto;
+      setState(() {});
+    }
+    setState(() {});
+  }
+
+  obtenerDatosBio() async {
+    final dbHelper = BiometriaSQL.instance;
+    int allRows = await dbHelper.queryRowCount();
+    if (allRows == 1) {
+      biometriasql = await dbHelper.getUsuarioBio();
+      print(biometriasql.dni);
+      print(biometriasql.password);
       setState(() {});
     }
     setState(() {});

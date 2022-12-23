@@ -35,6 +35,7 @@ TextStyle fontStyleSoporte = const TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.black);
+TextStyle style = const TextStyle(fontFamily: 'Lato', fontSize: 14.0);
 //Color colorFondo = colorFromHex("#004a80");
 DateTime fechaActual = DateTime.now();
 String strHora = DateFormat('kk:mm:ss').format(fechaActual);

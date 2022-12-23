@@ -4,15 +4,15 @@ Biometriasql configuracionUsuarioFromJson(String str) =>
     Biometriasql.fromDB(json.decode(str));
 
 class Biometriasql {
-    String? dni;
+  Biometriasql({
+        this.dni,
+    this.password,
+    });
+  String? dni;
   String? password;
 
-  Biometriasql(
-    this.dni,
-    this.password,
-  );
 
-    Map<String, dynamic> toMapForDb() {
+  Map<String, dynamic> toMapForDb() {
     var map = <String, dynamic>{};
     map["DNI"] = dni;
     map["password"] = password;
@@ -20,7 +20,7 @@ class Biometriasql {
     return map;
   }
 
-    Biometriasql.fromDB(Map<String, dynamic> map) {
+  Biometriasql.fromDB(Map<String, dynamic> map) {
     dni = map['DNI'];
     password = map['password'];
   }

@@ -2,20 +2,55 @@
 
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/services_biometria/auth.dart';
+import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
 import 'package:gore_app/data/sqlite/biometria_sql.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
 import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/utils/colores.dart';
+import 'package:gore_app/utils/responsive.dart';
+import 'package:gore_app/utils/variables.dart';
+import 'package:gore_app/view/private_screen.dart';
+import 'package:gore_app/view/widgets/dialogCustom.dart';
 import 'package:quickalert/quickalert.dart';
 
-class LoginPage extends StatelessWidget {
-  UsuarioLite? usuarioLite;
-  LoginPage({Key? key, this.usuarioLite}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  LoginPage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String? dni;
+  String? password;
+  @override
+  void initState() {
+    super.initState();
+    obtenerDatos();
+  }
+
+  void obtenerDatos() async {
+    final dbHelper = DatabaseHelper.instance;
+    int? allRows = await dbHelper.queryRowCount();
+    if (allRows == 1) {
+      UsuarioLite? usuarioLite = await dbHelper.getUsuario();
+      print(usuarioLite!.DNI!);
+      print(usuarioLite.vUsuContrasenia);
+      setState(() {
+        dni = usuarioLite.DNI!;
+        password = usuarioLite.vUsuContrasenia;
+      });
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    final dbHelper = BiometriaSQL.instance;
-    var size = MediaQuery.of(context).size;
+    final dbHelperBio = BiometriaSQL.instance;
+    ResponsiveApp responsiveApp = ResponsiveApp(context);
+    String? estado;
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
@@ -27,8 +62,8 @@ class LoginPage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.lock, size: size.width * 0.3),
+            children: [
+              Icon(Icons.lock, size: responsiveApp.dp(30)),
               const SizedBox(height: 20),
               const Text(
                   'Toque el botón para autenticarse con el sistema\ de autenticación local del dispositivo.',
@@ -39,46 +74,44 @@ class LoginPage extends StatelessWidget {
                   )),
               const SizedBox(height: 30),
               SizedBox(
-                width: size.width,
+                width: responsiveApp.wp(55),
                 child: TextButton(
                   onPressed: () async {
                     bool isAuthenticated = await AuthService.authenticateUser();
                     if (isAuthenticated) {
-                      if (usuarioLite != null) {
-                        String dni = usuarioLite!.DNI.toString();
-                        //dbHelper.delete(dni);
-                        String password =
-                            usuarioLite!.vUsuContrasenia.toString();
-                        int? allRows = await dbHelper.queryRowCount();
-                        if (allRows == 0) {
-                          Biometriasql biometriasql =
-                              Biometriasql(dni, password);
-                          dbHelper.insert(biometriasql);
-                          print("Insertado");
-                          print(biometriasql.dni);
-                        } else {
-                          if (allRows == 1) {
-                            Biometriasql biometriasql =
-                                Biometriasql(dni, password);
-                            dbHelper.update(dni, biometriasql);
-                            print("Actualizado");
-                            print(biometriasql.dni);
-                          }
-                          QuickAlert.show(
-                            context: context,
-                            type: QuickAlertType.error,
-                            text: "ERROR DE REGISTRO.");
-                        }
+                      int? allRows = await dbHelperBio.queryRowCount();
+                      if (allRows == 0) {
+                        Biometriasql biometriasql =
+                            Biometriasql(dni: dni, password: password);
+                        dbHelperBio.insert(biometriasql);
+                        estado = "Insertado";
+                        print("Insertado");
+                        print(biometriasql.dni);
                         QuickAlert.show(
                             context: context,
                             type: QuickAlertType.success,
-                            text: "Se ha registrado con éxito");
+                            text: "Se ha registrado con éxito.");
                       } else {
-                        QuickAlert.show(
+                        if (allRows == 1) {
+                          Biometriasql biometriasql =
+                              Biometriasql(dni: dni, password: password);
+                          dbHelperBio.update(dni!, biometriasql);
+                          print("Actualizado");
+                          estado = "Actualizado";
+                          print(biometriasql.dni);
+                          QuickAlert.show(
+                              context: context,
+                              type: QuickAlertType.success,
+                              text: "Se ha actualizado con éxito.");
+                        }
+                        /*
+                          QuickAlert.show(
                             context: context,
                             type: QuickAlertType.error,
-                            text: "ERROR DE REGISTRO.");
+                            text: "ERROR DE REGISTRO.");*/
+
                       }
+                      print("El estado se ha: $estado");
                     } else {
                       QuickAlert.show(
                           context: context,
@@ -93,7 +126,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
                         'REGISTRO BIOMETRICO',
                         style: TextStyle(
@@ -102,13 +135,65 @@ class LoginPage extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                           wordSpacing: 1.2,
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              botonElimarHuella(
+                responsiveApp: responsiveApp,
+                dbHelperBio: dbHelperBio,
+                dni: dni,
+              ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class botonElimarHuella extends StatelessWidget {
+  const botonElimarHuella({
+    Key? key,
+    required this.responsiveApp,
+    required this.dbHelperBio,
+    required this.dni,
+  }) : super(key: key);
+
+  final ResponsiveApp responsiveApp;
+  final BiometriaSQL dbHelperBio;
+  final String? dni;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: colorFondo,
+      child: MaterialButton(
+        minWidth: responsiveApp.wp(40),
+        onPressed: () async {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Alerta(context, dbHelperBio, dni!);
+              });
+
+          //dbHelperBio.delete(dni!);
+          /*
+          //dbHelperBio.delete(biometriasql!.dni!);*/
+        },
+        child: Text(
+          "Eliminar huella",
+          textAlign: TextAlign.center,
+          style: style.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: responsiveApp.dp(4)),
         ),
       ),
     );

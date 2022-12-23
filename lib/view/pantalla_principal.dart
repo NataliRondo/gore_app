@@ -1,4 +1,6 @@
-// ignore_for_file: no_logic_in_create_state, import_of_legacy_library_into_null_safe
+// ignore: duplicate_ignore
+// ignore_for_file: no_logic_in_create_state, import_of_legacy_library_into_null_safe, must_be_immutable, duplicate_ignore
+// @dart=2.9
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -13,12 +15,13 @@ import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/perfil_usuario.dart';
 import 'package:gore_app/view/widgets/menu.dart';
 // ignore: must_be_immutable
+
 class PantallaInicio extends StatefulWidget {
-  Usuario? oUsuario;
-  UsuarioLite? usuarioLite;
-  ConfiguracionUsuario? configuracionUsuario;
+  Usuario oUsuario;
+  UsuarioLite usuarioLite;
+  ConfiguracionUsuario configuracionUsuario;
   PantallaInicio(
-      {Key? key, this.oUsuario, this.usuarioLite, this.configuracionUsuario})
+      {Key key, this.oUsuario, this.usuarioLite, this.configuracionUsuario})
       : super(key: key);
 
   @override
@@ -27,17 +30,17 @@ class PantallaInicio extends StatefulWidget {
 }
 
 class _PantallaInicioState extends State<PantallaInicio> {
-  Usuario? oUsuario;
-  UsuarioLite? usuarioLite;
-  ConfiguracionUsuario? configuracionUsuario;
-  Uint8List? bytesConfiguracion;
+  Usuario oUsuario;
+  UsuarioLite usuarioLite;
+  ConfiguracionUsuario configuracionUsuario;
+  Uint8List bytesConfiguracion;
 
   _PantallaInicioState(
       this.oUsuario, this.usuarioLite, this.configuracionUsuario);
 
   GlobalKey<ScaffoldState> keyScaffold = GlobalKey();
   bool datos = false;
-  String? fotoGuardada;
+  String fotoGuardada;
 
   @override
   void initState() {
@@ -49,12 +52,12 @@ class _PantallaInicioState extends State<PantallaInicio> {
 
   obtenerDatos() async {
     final dbHelper = ConfiguracionBack.instance;
-    int? allRows = await dbHelper.queryRowCount();
+    int allRows = await dbHelper.queryRowCount();
     if (allRows == 1) {
       configuracionUsuario = await dbHelper.getUsuarioConfiguracion();
       datos = true;
-      fotoGuardada = configuracionUsuario!.foto!;
-      bytesConfiguracion = base64.decode(fotoGuardada!.split(',').last);
+      fotoGuardada = configuracionUsuario.foto;
+      bytesConfiguracion = base64.decode(fotoGuardada.split(',').last);
     }
     setState(() {});
   }
@@ -63,7 +66,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
   Widget build(BuildContext context) {
     ResponsiveApp responsiveApp = ResponsiveApp(context);
 
-    Uint8List bytes = base64.decode(oUsuario!.foto!.split(',').last);
+    Uint8List bytes = base64.decode(oUsuario.foto.split(',').last);
 
     var scaffold = Scaffold(
       key: keyScaffold,
@@ -73,7 +76,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
           tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           icon: const Icon(Icons.menu),
           onPressed: () async {
-            keyScaffold.currentState!.openDrawer();
+            keyScaffold.currentState.openDrawer();
             obtenerDatos();
           },
         ),
@@ -101,7 +104,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                                   radius: responsiveApp.dp(25),
                                   //child: Image.memory(bytes),
                                   backgroundImage: MemoryImage(
-                                      bytesConfiguracion!,
+                                      bytesConfiguracion,
                                       scale: 0.3),
                                   backgroundColor: Colors.transparent,
                                 ),
@@ -127,7 +130,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
                           width: double.infinity,
                           child: Center(
                             child: Text(
-                              oUsuario!.cdesUser!,
+                              oUsuario.cdesUser,
                               textAlign: TextAlign.right,
                               style: fontStyle,
                             ),
@@ -141,7 +144,7 @@ class _PantallaInicioState extends State<PantallaInicio> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: menuDrawer(context, oUsuario!, usuarioLite!),
+              child: menuDrawer(context, oUsuario, usuarioLite),
             )
           ],
         ),

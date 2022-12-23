@@ -4,8 +4,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/loginDA.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
+import 'package:gore_app/data/sqlite/biometria_sql.dart';
 import 'package:gore_app/data/sqlite/configuracion.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
+import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/models/configuracion.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/routes.dart';
@@ -16,17 +18,16 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:splashscreen/splashscreen.dart';
 
-Future <void> main() async {
-  
+Future<void> main() async {
   //initializeDateFormatting().then((_) => runApp(const MyApp()));
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  initializeDateFormatting().then((_) =>runApp(
-    const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyApp(),
-    ),
-  ));
+  initializeDateFormatting().then((_) => runApp(
+        const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: MyApp(),
+        ),
+      ));
 }
 
 class MyApp extends StatefulWidget {
@@ -43,7 +44,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     initPlataformState();
   }
-  
+
   Future<void> initPlataformState() async {
     OneSignal.shared.setAppId(oneSignalID);
     OneSignal.shared
@@ -51,15 +52,15 @@ class _MyAppState extends State<MyApp> {
       print('NOTIFICATION OPENED HANDLER CALLED WITH: $result');
 
       setState(() {
+        // ignore: unused_local_variable
         var noti =
             result.notification.jsonRepresentation().replaceAll("\\n", "\n");
         var notificacion = result.notification.rawPayload;
-        
 
         print("Opened notification: \n$notificacion");
 
         //notificacion.
-       /*Navigator.of(context).push(MaterialPageRoute(
+        /*Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => PushNotificacion(
             notificacion: notificacion,
             noti: noti,
@@ -67,19 +68,21 @@ class _MyAppState extends State<MyApp> {
         ));*/
       });
     });
-    
   }
 
   loadWidget() async {
     final dbHelper = DatabaseHelper.instance;
     final dbHelperConf = ConfiguracionBack.instance;
+    final dbHelperBio = BiometriaSQL.instance;
+    loginDA api = loginDA();
     int allRows = await dbHelper.queryRowCount();
     int allRowsConf = await dbHelperConf.queryRowCount();
+    int allRowsBio = await dbHelperBio.queryRowCount();
     if (allRows == 1) {
       UsuarioLite oUsarioLite = await dbHelper.getUsuario();
       ConfiguracionUsuario configuracionUsuario =
           await dbHelperConf.getUsuarioConfiguracion();
-      loginDA api = loginDA();
+
       // ignore: use_build_context_synchronously
       Usuario oUsuario = await api.login(oUsarioLite.DNI.toString(),
           oUsarioLite.vUsuContrasenia.toString(), context);
@@ -101,11 +104,18 @@ class _MyAppState extends State<MyApp> {
                 ));
       } else {
         return await Future<Widget>.delayed(
-            const Duration(seconds: 4), () => const AfterSplash());
+            const Duration(seconds: 4), () => AfterSplash());
       }
     } else {
+     /* if (allRowsBio == 1) {
+        Biometriasql usuarioBio = await dbHelperBio.getUsuarioBio();
+        print(usuarioBio.dni);
+        print(usuarioBio.password);
+        return await Future<Widget>.delayed(
+            const Duration(seconds: 4), () => AfterSplash());
+      }*/
       return await Future<Widget>.delayed(
-          const Duration(seconds: 4), () => const AfterSplash());
+          const Duration(seconds: 4), () => AfterSplash());
     }
   }
 
@@ -123,13 +133,15 @@ class _MyAppState extends State<MyApp> {
 }
 
 class AfterSplash extends StatelessWidget {
-  const AfterSplash({Key key}) : super(key: key);
+  AfterSplash({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LoginView(),
+      home: LoginView(),
       routes: routes,
     );
   }

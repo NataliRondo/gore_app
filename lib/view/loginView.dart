@@ -1,19 +1,24 @@
 // ignore_for_file: library_private_types_in_public_api, deprecated_member_use, file_names, dead_code
-
+//@dart=2.9
 import 'package:flutter/material.dart';
+import 'package:gore_app/data/services_biometria/auth.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
+import 'package:gore_app/data/sqlite/biometria_sql.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
+import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/inputLogin.dart';
 import 'package:gore_app/utils/responsive.dart';
+import 'package:gore_app/utils/variables.dart';
 import 'package:gore_app/view/login/login_backend.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:gore_app/view/pantalla_principal.dart';
 import 'package:gore_app/view/widgets/password_widget.dart';
 import 'package:quickalert/quickalert.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+  LoginView({Key key}) : super(key: key);
 
   @override
   _LoginView createState() => _LoginView();
@@ -26,20 +31,19 @@ class _LoginView extends State<LoginView> implements LoginContract {
     //autoLogIn();
   }
 
-  TextStyle style = const TextStyle(fontFamily: 'Lato', fontSize: 14.0);
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String? username, password;
-  late LoginBackend _presenter;
+  String username, password;
+  LoginBackend _presenter;
   double _elementsOpacity = 1;
   final passHolder = TextEditingController();
   final uidHolder = TextEditingController();
 
   void autoLogIn() async {
     final dbHelper = DatabaseHelper.instance;
-    int? allRows = await dbHelper.queryRowCount();
+    int allRows = await dbHelper.queryRowCount();
     if (allRows == 1) {
-      UsuarioLite? oUsarioLite = await dbHelper.getUsuario();
-      username = oUsarioLite!.vUsuNick.toString();
+      UsuarioLite oUsarioLite = await dbHelper.getUsuario();
+      username = oUsarioLite.vUsuNick.toString();
       password = oUsarioLite.vUsuContrasenia.toString();
       _submit();
       //Obtener el usuario
@@ -52,7 +56,26 @@ class _LoginView extends State<LoginView> implements LoginContract {
 
   void _submit() {
     //_presenter.doLogin(username.toString(), password.toString());
+
     _presenter.doLogin(uidHolder.text, passHolder.text, context);
+  }
+
+  void _submitBio() async {
+    //_presenter.doLogin(username.toString(), password.toString());
+    final dbHelperBio = BiometriaSQL.instance;
+    int allRowsBio = await dbHelperBio.queryRowCount();
+    if (allRowsBio == 1) {
+      Biometriasql biometriasql = await dbHelperBio.getUsuarioBio();
+      username = biometriasql.dni;
+      password = biometriasql.password;
+      _presenter.doLogin(username, password, context);
+    } else {
+      QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          text:
+              "LA AUTENTICACIÓN FALLO.\ Primero tiene que registrar su huella.");
+    }
   }
 
   @override
@@ -81,6 +104,37 @@ class _LoginView extends State<LoginView> implements LoginContract {
         ),
       ),
     );
+    var desbloqueo = Padding(
+      padding: const EdgeInsets.only(left: 15),
+      child: Row(
+        children: [
+          SizedBox(
+            width: responsive.wp(responsive.isTablet ? 15 : 12),
+          ),
+          Flexible(
+            flex: 1,
+            child: Text(
+              'Desbloquear con biometría',
+              style: TextStyle(
+                  fontSize: responsive.dp(responsive.isTablet ? 2 : 4),
+                  fontWeight: FontWeight.bold,
+                  color: AzulApp,
+                  fontFamily: "Lato"),
+            ),
+          ),
+          IconButton(
+            //padding:  EdgeInsets.only(left: tam),
+            onPressed: () async {
+              bool isAuthenticated = await AuthService.authenticateUser();
+              if (isAuthenticated) {
+                _submitBio();
+              }
+            },
+            icon: const Icon(Icons.fingerprint),
+          ),
+        ],
+      ),
+    );
 
     return Scaffold(
       key: scaffoldKey,
@@ -107,16 +161,18 @@ class _LoginView extends State<LoginView> implements LoginContract {
                   const SizedBox(height: 45.0),
                   inputLogin(uidHolder, false, "Usuario", username, style),
                   const SizedBox(height: 25.0),
-                  PasswordField(passwordController: passHolder, fadePassword: _elementsOpacity == 0),
+                  PasswordField(
+                      passwordController: passHolder,
+                      fadePassword: _elementsOpacity == 0),
                   //inputLogin(passHolder, true, "Contraseña", password, style),
                   const SizedBox(
                     height: 35.0,
                   ),
                   loginButon,
                   const SizedBox(
-                    height: 15.0,
+                    height: 5.0,
                   ),
-                  
+                  desbloqueo
                 ],
               ),
             ),
@@ -160,4 +216,6 @@ class _LoginView extends State<LoginView> implements LoginContract {
                 ) //new
             ));
   }
+
+  
 }

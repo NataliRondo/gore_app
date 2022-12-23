@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/utils/colores.dart';
 
+// ignore: must_be_immutable
 class PrivateScreen extends StatelessWidget {
-  const PrivateScreen({Key? key}) : super(key: key);
+  Biometriasql? biometriasql;
+   PrivateScreen({Key? key, this.biometriasql}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +21,8 @@ class PrivateScreen extends StatelessWidget {
               const Icon(Icons.verified_user,
                   size: 100, color: Colors.blueGrey),
               const SizedBox(height: 20),
-              const Text(
-                  'Se ha registrado con éxito',
+               Text(
+                  biometriasql!.dni!,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 21,
