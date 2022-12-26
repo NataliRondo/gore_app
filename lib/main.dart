@@ -4,10 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/loginDA.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
-import 'package:gore_app/data/sqlite/biometria_sql.dart';
 import 'package:gore_app/data/sqlite/configuracion.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
-import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/models/configuracion.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/routes.dart';
@@ -73,11 +71,9 @@ class _MyAppState extends State<MyApp> {
   loadWidget() async {
     final dbHelper = DatabaseHelper.instance;
     final dbHelperConf = ConfiguracionBack.instance;
-    final dbHelperBio = BiometriaSQL.instance;
     loginDA api = loginDA();
     int allRows = await dbHelper.queryRowCount();
     int allRowsConf = await dbHelperConf.queryRowCount();
-    int allRowsBio = await dbHelperBio.queryRowCount();
     if (allRows == 1) {
       UsuarioLite oUsarioLite = await dbHelper.getUsuario();
       ConfiguracionUsuario configuracionUsuario =
@@ -104,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                 ));
       } else {
         return await Future<Widget>.delayed(
-            const Duration(seconds: 4), () => AfterSplash());
+            const Duration(seconds: 2), () => AfterSplash());
       }
     } else {
      /* if (allRowsBio == 1) {

@@ -43,16 +43,21 @@ class _ListaAsistenciasState extends State<ListaAsistencias> {
                 child: Card(
                   color: const Color.fromARGB(255, 232, 241, 248),
                   child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: asistenciasLista
-                        .map((Asistencias asistencia) => asistenciaWidget(
-                            asistencia.nombreDia!,
-                            asistencia.hora!,
-                            asistencia.fecha!))
-                        .toList(),
-                  ),
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: asistenciasLista.length == 0
+                          ? [
+                              ListTile(
+                                title: Text("No hay asistencias"),
+                              )
+                            ]
+                          : asistenciasLista
+                              .map((Asistencias asistencia) => asistenciaWidget(
+                                  asistencia.nombreDia!,
+                                  asistencia.hora!,
+                                  asistencia.fecha!))
+                              .toList()),
                 ),
               ),
             ),

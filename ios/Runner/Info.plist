@@ -18,6 +18,9 @@
 	<array>
 		<string>tel</string>
 	</array>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Biometric authentication for accessing secrets</string>
+
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>sms</string>

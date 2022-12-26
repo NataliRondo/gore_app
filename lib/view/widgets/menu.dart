@@ -2,9 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gore_app/data/sqlite/DatabaseHelper.dart';
-import 'package:gore_app/data/sqlite/biometria_sql.dart';
 import 'package:gore_app/models/UsuarioLite.dart';
-import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/view/asistenciaView.dart';
@@ -14,7 +12,8 @@ import 'package:gore_app/view/login_screen.dart';
 import 'package:gore_app/view/notificacionesView.dart';
 import 'package:gore_app/view/soporteView.dart';
 
-Widget menuDrawer(BuildContext context, Usuario usuario, UsuarioLite usuarioLite) {
+Widget menuDrawer(
+    BuildContext context, Usuario usuario, UsuarioLite usuarioLite) {
   return SingleChildScrollView(
     child: Column(
       children: [
@@ -99,7 +98,7 @@ Widget menuDrawer(BuildContext context, Usuario usuario, UsuarioLite usuarioLite
             Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: ((context) =>  LoginPage()),
+                builder: ((context) => LoginPage()),
               ),
             );
           },
@@ -117,8 +116,6 @@ Widget menuDrawer(BuildContext context, Usuario usuario, UsuarioLite usuarioLite
           onTap: () async {
             Navigator.of(context).pop();
             final dbHelper = DatabaseHelper.instance;
-            final dbHelperBio = BiometriaSQL.instance;
-            Biometriasql? biometriasql = await dbHelperBio.getUsuarioBio();
             dbHelper.delete(usuario.codUser!);
             //dbHelperBio.delete(biometriasql!.dni!);
             /* Navigator.push(

@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
+import 'package:gore_app/utils/variables.dart';
 
 Widget tarjetaCumple(
   BuildContext context,
@@ -14,6 +15,7 @@ Widget tarjetaCumple(
   TextStyle textStyle,
   String? foto,
   String dependencia,
+  DateTime fecha
 ) {
   Uint8List? bytes = base64.decode(foto!.split(',').last);
   ResponsiveApp responsiveApp = ResponsiveApp(context);
@@ -114,8 +116,8 @@ Widget tarjetaCumple(
                         ),
                         SizedBox(
                           width: responsiveApp.wp(30),
-                          child: const Center(
-                            child: Text("",
+                          child:  Center(
+                            child: Text("${dateFormat.format(fecha)}",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'Lato',

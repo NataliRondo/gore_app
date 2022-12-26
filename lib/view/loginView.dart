@@ -74,7 +74,7 @@ class _LoginView extends State<LoginView> implements LoginContract {
           context: context,
           type: QuickAlertType.error,
           text:
-              "LA AUTENTICACIÓN FALLO.\ Primero tiene que registrar su huella.");
+              "LA AUTENTICACIÓN FALLO.\n Primero tiene que registrar su huella.");
     }
   }
 

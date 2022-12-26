@@ -21,7 +21,6 @@ class CumpleanioLista extends StatefulWidget {
 }
 
 class _CumpleanioListaState extends State<CumpleanioLista> {
-
   ServicioCumpleanio servicioCumpleanio = ServicioCumpleanio();
 
   List<CumpleanioDia> cumpleanioHoy = [];
@@ -37,9 +36,9 @@ class _CumpleanioListaState extends State<CumpleanioLista> {
         Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(right: responsiveApp.dp(76), top: 10),
-              child: const Text(
-                "Hoy",
+              padding: EdgeInsets.only(right: responsiveApp.dp(60), top: 10),
+              child: Text(
+                "Hoy: " + "${dateFormat.format(DateTime.now())}",
                 textAlign: TextAlign.right,
               ),
             ),
@@ -59,16 +58,22 @@ class _CumpleanioListaState extends State<CumpleanioLista> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
-                        children: cumpleanioLista
-                            .map(
-                                (CumpleanioDiaH cumpleanioDia) => tarjetaCumple(
-                                      context,
-                                      "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
-                                      fontStyleCumple,
-                                      cumpleanioDia.foto.toString(),
-                                      "",
-                                    ))
-                            .toList(),
+                        children: cumpleanioLista.length == 0
+                            ? [
+                                ListTile(
+                                  title: Text("No hay cumpleaños"),
+                                )
+                              ]
+                            : cumpleanioLista
+                                .map((CumpleanioDiaH cumpleanioDia) =>
+                                    tarjetaCumple(
+                                        context,
+                                        "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
+                                        fontStyleCumple,
+                                        cumpleanioDia.foto.toString(),
+                                        "",
+                                        cumpleanioDia.fechaNacimiento!))
+                                .toList(),
                       ),
                     ],
                   );
@@ -89,9 +94,10 @@ class _CumpleanioListaState extends State<CumpleanioLista> {
         Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(right: responsiveApp.dp(76), top: 10),
-              child: const Text(
-                "Mañana",
+              padding: EdgeInsets.only(right: responsiveApp.dp(60), top: 10),
+              child: Text(
+                "Mañana: " +
+                    "${dateFormat.format(DateTime.now().add(const Duration(days: 1)))}",
                 textAlign: TextAlign.right,
               ),
             ),
@@ -111,16 +117,22 @@ class _CumpleanioListaState extends State<CumpleanioLista> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
-                        children: cumpleanioLista
-                            .map(
-                                (CumpleanioDiaM cumpleanioDia) => tarjetaCumple(
-                                      context,
-                                      "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
-                                      fontStyleCumple,
-                                      cumpleanioDia.foto.toString(),
-                                      "",
-                                    ))
-                            .toList(),
+                        children: cumpleanioLista.length == 0
+                            ? [
+                                ListTile(
+                                  title: Text("No hay cumpleaños"),
+                                )
+                              ]
+                            : cumpleanioLista
+                                .map((CumpleanioDiaM cumpleanioDia) =>
+                                    tarjetaCumple(
+                                        context,
+                                        "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
+                                        fontStyleCumple,
+                                        cumpleanioDia.foto.toString(),
+                                        "",
+                                        cumpleanioDia.fechaNacimiento!))
+                                .toList(),
                       ),
                     ],
                   );
@@ -141,9 +153,10 @@ class _CumpleanioListaState extends State<CumpleanioLista> {
         Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(right: responsiveApp.dp(76), top: 10),
-              child: const Text(
-                "Ayer",
+              padding: EdgeInsets.only(right: responsiveApp.dp(60), top: 10),
+              child: Text(
+                "Ayer: " +
+                    "${dateFormat.format(DateTime.now().subtract(const Duration(days: 1)))}",
                 textAlign: TextAlign.right,
               ),
             ),
@@ -163,16 +176,22 @@ class _CumpleanioListaState extends State<CumpleanioLista> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
-                        children: cumpleanioLista
-                            .map(
-                                (CumpleanioDiaA cumpleanioDia) => tarjetaCumple(
-                                      context,
-                                      "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
-                                      fontStyleCumple,
-                                      cumpleanioDia.foto.toString(),
-                                      "",
-                                    ))
-                            .toList(),
+                        children: cumpleanioLista.length == 0
+                            ? [
+                                ListTile(
+                                  title: Text("No hay cumpleaños"),
+                                )
+                              ]
+                            : cumpleanioLista
+                                .map((CumpleanioDiaA cumpleanioDia) =>
+                                    tarjetaCumple(
+                                        context,
+                                        "${cumpleanioDia.vPerNombre!} ${cumpleanioDia.vPerApellidoP!} ${cumpleanioDia.vPerApellidoM!}",
+                                        fontStyleCumple,
+                                        cumpleanioDia.foto.toString(),
+                                        "",
+                                        cumpleanioDia.fechaNacimiento!))
+                                .toList(),
                       ),
                     ],
                   );

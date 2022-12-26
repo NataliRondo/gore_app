@@ -9,7 +9,6 @@ import 'package:gore_app/models/biometria_sql.dart';
 import 'package:gore_app/utils/colores.dart';
 import 'package:gore_app/utils/responsive.dart';
 import 'package:gore_app/utils/variables.dart';
-import 'package:gore_app/view/private_screen.dart';
 import 'package:gore_app/view/widgets/dialogCustom.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -50,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final dbHelperBio = BiometriaSQL.instance;
     ResponsiveApp responsiveApp = ResponsiveApp(context);
+    
     String? estado;
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
@@ -59,17 +59,17 @@ class _LoginPageState extends State<LoginPage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(responsiveApp.dp(4)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(Icons.lock, size: responsiveApp.dp(30)),
               const SizedBox(height: 20),
-              const Text(
+               Text(
                   'Toque el botón para autenticarse con el sistema\ de autenticación local del dispositivo.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 21,
+                    fontSize: responsiveApp.dp(5),
                     color: Colors.black,
                   )),
               const SizedBox(height: 30),
@@ -78,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextButton(
                   onPressed: () async {
                     bool isAuthenticated = await AuthService.authenticateUser();
+                    
                     if (isAuthenticated) {
                       int? allRows = await dbHelperBio.queryRowCount();
                       if (allRows == 0) {
@@ -120,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                   style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.all(responsiveApp.dp(4.5)),
                     backgroundColor: colorFondo,
                     shadowColor: const Color(0xFF323247),
                   ),
@@ -130,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         'REGISTRO BIOMETRICO',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: responsiveApp.dp(4),
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                           wordSpacing: 1.2,

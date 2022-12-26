@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:gore_app/utils/colores.dart';
+import 'package:gore_app/utils/responsive.dart';
 
 detalleNotificacion(
     BuildContext context,
@@ -11,12 +12,13 @@ detalleNotificacion(
     // ignore: non_constant_identifier_names
     String fechaRegistro,
     String Registrado) {
+      ResponsiveApp responsiveApp = ResponsiveApp(context);
   print(detalle);
   return Scaffold(
     appBar: AppBar(
       title: Text(
         notificacion,
-        style: const TextStyle(fontSize: 15),
+        style:  TextStyle(fontSize: responsiveApp.dp(4)),
       ),
       backgroundColor: colorFondo,
       leading: IconButton(
@@ -29,56 +31,56 @@ detalleNotificacion(
     ),
     body: SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(right: 30, left: 30, top: 15),
+        padding:  EdgeInsets.only(right: responsiveApp.dp(3), left: responsiveApp.dp(3), top: 15),
         child: Column(
           children: [
             Center(
               child: Table(
                 children: [
-                  TableRow(children: [
-                    Text(
-                      fechaRegistro,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Lato',
+                  TableRow(
+                    children: [
+                      Text(
+                        fechaRegistro,
+                        style: TextStyle(
+                          fontSize: responsiveApp.dp(3),
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Lato',
+                        ),
+                        textAlign: TextAlign.left,
                       ),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      Registrado,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Lato',
-                      ),
-                      textAlign: TextAlign.right,
-                    )
-                  ]),
+                      Text(
+                        Registrado,
+                        style:  TextStyle(
+                          fontSize: responsiveApp.dp(3),
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Lato',
+                        ),
+                        textAlign: TextAlign.right,
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 15, right: 15, left: 15),
               child: Center(
-                  child: Text(
-                notificacion,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Lato',
+                child: Text(
+                  notificacion,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Lato',
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              )),
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(5),
-              child: Card(
-                color: Theme.of(context).canvasColor,
-                child: Padding(
-                  padding: const EdgeInsets.all(3),
-                  child: Html(data: detalle),
-                ),
+            Card(
+              color: Theme.of(context).canvasColor,
+              child: Padding(
+                padding: const EdgeInsets.all(3),
+                child: Html(data: detalle),
               ),
             ),
           ],
