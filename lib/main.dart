@@ -120,7 +120,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(
-        imageBackground: const AssetImage("src/splash_inicio.PNG"),
+        imageBackground: const AssetImage("src/splash_GORE.png"),
         navigateAfterFuture: loadWidget(),
         //loaderColor: Colors.white,
       ),
