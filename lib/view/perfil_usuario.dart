@@ -52,6 +52,7 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
 
   @override
   void initState() {
+    
     setState(() {
       if (configuracionUsuario == null) {
         obtenerDatos();
@@ -64,15 +65,20 @@ class _PerfilUsuarioState extends State<PerfilUsuario> {
     super.initState();
 
     final newVersion = NewVersion(
-      androidId: 'com.snapchat.android',
+      iOSId: 'com.google.Vespa',
+      androidId: 'com.google.android.apps.cloudconsole',
     );
+    
 
-    Timer(const Duration(milliseconds: 800), () {
+   /* */
+   Timer(const Duration(milliseconds: 800), () {
       checkNewVersion(newVersion);
     });
 
     //super.initState();
+    
   }
+  
 
   void checkNewVersion(NewVersion newVersion) async {
     final status = await newVersion.getVersionStatus();

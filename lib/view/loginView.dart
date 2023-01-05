@@ -25,10 +25,27 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginView extends State<LoginView> implements LoginContract {
+  String valorHuella = "";
   @override
   void initState() {
+    obtenerValor();
     super.initState();
+
     //autoLogIn();
+  }
+
+  void obtenerValor() async {
+    final dbHelperBio = BiometriaSQL.instance;
+    int allRowsBio = await dbHelperBio.queryRowCount();
+    if (allRowsBio == 1) {
+      setState(() {
+        valorHuella = "1";
+      });
+    } else {
+      setState(() {
+        valorHuella = "0";
+      });
+    }
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -37,6 +54,7 @@ class _LoginView extends State<LoginView> implements LoginContract {
   double _elementsOpacity = 1;
   final passHolder = TextEditingController();
   final uidHolder = TextEditingController();
+  
 
   void autoLogIn() async {
     final dbHelper = DatabaseHelper.instance;
@@ -172,7 +190,7 @@ class _LoginView extends State<LoginView> implements LoginContract {
                   const SizedBox(
                     height: 5.0,
                   ),
-                  desbloqueo
+                  valorHuella == "0" ? Container() : desbloqueo
                 ],
               ),
             ),
@@ -216,6 +234,4 @@ class _LoginView extends State<LoginView> implements LoginContract {
                 ) //new
             ));
   }
-
-  
 }

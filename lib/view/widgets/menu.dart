@@ -11,6 +11,7 @@ import 'package:gore_app/view/loginView.dart';
 import 'package:gore_app/view/login_screen.dart';
 import 'package:gore_app/view/notificacionesView.dart';
 import 'package:gore_app/view/soporteView.dart';
+import 'package:gore_app/view/widgets/soporte.dart';
 
 Widget menuDrawer(
     BuildContext context, Usuario usuario, UsuarioLite usuarioLite) {
@@ -83,6 +84,22 @@ Widget menuDrawer(
               context,
               CupertinoPageRoute(
                 builder: ((context) => const SoporteView()),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.contacts,
+            color: Tema,
+          ),
+          title: const Text("Soporte"),
+          onTap: () {
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: ((context) => SoporteTelefonico()),
               ),
             );
           },

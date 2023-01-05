@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gore_app/models/usuario.dart';
 import 'package:gore_app/utils/colores.dart';
-import 'package:gore_app/view/widgets/cuempleanio.dart';
+import 'package:gore_app/view/widgets/cumpleanio.dart';
 
 class Cumple extends StatelessWidget {
   Usuario? usuario;

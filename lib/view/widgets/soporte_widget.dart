@@ -72,7 +72,7 @@ Widget tarjetaSoporte(BuildContext context) {
                       child: Row(
                         children: [
                           Padding(
-                            padding:  EdgeInsets.only(left: responsiveApp.dp(5)),
+                            padding: EdgeInsets.only(left: responsiveApp.dp(5)),
                             child: Text(
                               "sgti@regionlalibertad.gob.pe",
                               textAlign: TextAlign.center,
@@ -118,7 +118,9 @@ Widget tarjetaSoporte(BuildContext context) {
                     "Comunicarse a los siguientes anexos durante horario laboral:"),
               ),
               Padding(
-                padding:  EdgeInsets.only(right: responsiveApp.dp(50),),
+                padding: EdgeInsets.only(
+                  right: responsiveApp.dp(50),
+                ),
                 child: Column(
                   children: const [
                     Text("Anexo 01: 120"),
@@ -189,7 +191,8 @@ Widget tarjetaSoporte(BuildContext context) {
                             child: Row(
                               children: [
                                 Padding(
-                                  padding:  EdgeInsets.only(left: responsiveApp.dp(5)),
+                                  padding: EdgeInsets.only(
+                                      left: responsiveApp.dp(5)),
                                   child: Text(
                                     "WhatsApp",
                                     textAlign: TextAlign.center,
@@ -230,7 +233,9 @@ Widget tarjetaSoporte(BuildContext context) {
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(left: responsiveApp.dp(5),),
+                                  padding: EdgeInsets.only(
+                                    left: responsiveApp.dp(5),
+                                  ),
                                   child: Text(
                                     "Teléfono",
                                     textAlign: TextAlign.center,
